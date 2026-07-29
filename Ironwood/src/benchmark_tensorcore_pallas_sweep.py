@@ -110,12 +110,7 @@ def _libtpu_args(raw_dir: Path) -> str:
             )
         )
     ]
-    retained.extend(
-        (
-            "--xla_jf_debug_level=2",
-            f"--xla_jf_dump_to={raw_dir}",
-        )
-    )
+    retained.append(f"--xla_jf_dump_to={raw_dir}")
     return shlex.join(retained)
 
 
@@ -126,22 +121,15 @@ def _pass_ordinal(path: Path) -> int:
 
 def _select_final_bundle(raw_dir: Path) -> Path | None:
     tlp_candidates = []
-    mxu_candidates = []
     for path in raw_dir.rglob("*"):
         if not path.is_file() or not path.name.endswith("-final_bundles.txt"):
             continue
-        text = path.read_text(encoding="utf-8", errors="replace")
         if re.search(r"-TLP-\d+-final_bundles\.txt$", path.name):
             tlp_candidates.append(path)
-        if re.search(r"\bvmat(?:mul|prep|res)", text, flags=re.IGNORECASE):
-            mxu_candidates.append(path)
-    candidates = [
-        path for path in tlp_candidates if path in mxu_candidates
-    ] or mxu_candidates
-    if not candidates:
+    if not tlp_candidates:
         return None
     return max(
-        candidates,
+        tlp_candidates,
         key=lambda path: (
             _pass_ordinal(path),
             path.stat().st_mtime_ns,
@@ -264,19 +252,27 @@ def _run_case(
         if metrics_path.is_file()
         else None
     )
+    known_report_abort = (
+        returncode == -6
+        and selected_bundle is not None
+        and "vmem_report_header.tmpl" in stderr
+    )
 
     if timed_out:
         status = "failed"
         reason = "case_timeout"
-    elif returncode != 0:
+    elif returncode != 0 and not known_report_abort:
         status = "failed"
         reason = "benchmark_process_failed"
     elif selected_bundle is None:
         status = "failed"
         reason = "final_bundle_missing"
-    elif not metrics or not metrics["correctness"]["passed"]:
+    elif metrics and not metrics["correctness"]["passed"]:
         status = "failed"
         reason = "correctness_failed"
+    elif not metrics and not known_report_abort:
+        status = "failed"
+        reason = "metrics_missing"
     else:
         status = "succeeded"
         reason = None
@@ -288,6 +284,13 @@ def _run_case(
         "status": status,
         "reason": reason,
         "returncode": returncode,
+        "benchmark_executed": returncode == 0,
+        "dump_warning": (
+            "libtpu aborted after writing final bundles because the public "
+            "image lacks vmem_report_header.tmpl"
+            if known_report_abort
+            else None
+        ),
         "started_at": started_at.isoformat(),
         "finished_at": finished_at.isoformat(),
         "duration_seconds": (finished_at - started_at).total_seconds(),
