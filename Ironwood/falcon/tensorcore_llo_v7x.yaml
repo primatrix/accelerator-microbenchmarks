@@ -6,7 +6,7 @@
 name: tensorcore-llo-v7x-m256-k256-n256
 exp_type: PROFILING
 artifact_type: operator-profile
-cluster_name: tpu7x-cluster
+cluster_name: tpu-training-antgroup
 profile: true
 tags: [profile, operator-optimization, pallas, mxu-reverse-engineering]
 model_version: tensorcore-mxu-model-v1
