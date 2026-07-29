@@ -149,7 +149,9 @@ def _analyze_case(bundle_path: Path) -> dict[str, Any]:
             "last_bundle": max(bundle_indices) if bundle_indices else None,
         },
         "mxu": {
-            "vmatprep_subr": _count(r"\bvmatprep\.subr\.bf16", text),
+            "vmatprep_subr": _count(
+                r"\bvmatprep\.subr(?:\.msk)?\.bf16", text
+            ),
             "vmatpush": sum(push_variants.values()),
             "vmatpush_variants": {
                 str(variant): count
@@ -231,6 +233,7 @@ def _write_matrix(path: Path, cases: list[dict[str, Any]]) -> None:
         "n_panels_256",
         "parallel_axis",
         "bundle_count",
+        "vmatprep_subr",
         "vmatmul",
         "vpop",
         "vadd_f32",
@@ -253,6 +256,7 @@ def _write_matrix(path: Path, cases: list[dict[str, Any]]) -> None:
                     "n_panels_256": case["decomposition"]["n_panels_256"],
                     "parallel_axis": case["decomposition"]["parallel_axis"],
                     "bundle_count": case["schedule"]["bundle_count"],
+                    "vmatprep_subr": case["mxu"]["vmatprep_subr"],
                     "vmatmul": case["mxu"]["vmatmul"],
                     "vpop": case["mxu"]["vpop"],
                     "vadd_f32": case["vector_path"]["vadd_f32"],
@@ -283,6 +287,7 @@ def _case_row(case: dict[str, Any]) -> str:
         f"{decomposition['k_panels_256']}×"
         f"{decomposition['n_panels_256']} "
         f"| {decomposition['parallel_axis']} "
+        f"| {mxu['vmatprep_subr']} "
         f"| {mxu['vmatmul']} "
         f"| {mxu['vpop']} "
         f"| {vector_path['vadd_f32']} "
@@ -354,9 +359,10 @@ def _write_report(path: Path, cases: list[dict[str, Any]]) -> None:
         "\n",
         "## 各 shape 的直接统计\n",
         "\n",
-        "| Case | M×K×N panel | 双 MXU 轴 | vmatmul | vpop | vadd "
+        "| Case | M×K×N panel | 双 MXU 轴 | vmatprep.subr | vmatmul "
+        "| vpop | vadd "
         "| masked matmul/mask ops | MRB entries mxu0/1 | bundles |\n",
-        "|---|---:|:---:|---:|---:|---:|---:|---:|---:|\n",
+        "|---|---:|:---:|---:|---:|---:|---:|---:|---:|---:|\n",
     ]
     lines.extend(_case_row(case) for case in cases)
     lines.extend(
