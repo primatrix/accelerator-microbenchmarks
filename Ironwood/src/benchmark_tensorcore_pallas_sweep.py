@@ -2,11 +2,11 @@
 """Sweep exact-shape MXU cases in one Falcon TPU pod.
 
 Each case runs in a fresh Python subprocess so that libtpu can bind
-``--xla_jf_dump_to`` to a case-specific directory at initialization.
+``--xla_mosaic_dump_to`` to a case-specific directory at initialization.
 There is still only one Falcon workload pod and one TPU allocation for the
-whole sweep. Only the last JF LLO containing bundled MXU instructions is
-copied into the Falcon artifact. A failed shape is recorded and the remaining
-shapes continue.
+whole sweep. Mosaic debug info is enabled so the backend emits bundled MXU
+LLO. Only the final MXU bundle is copied into the Falcon artifact. A failed
+shape is recorded and the remaining shapes continue.
 """
 
 from __future__ import annotations
@@ -106,11 +106,17 @@ def _libtpu_args(raw_dir: Path) -> str:
             (
                 "--xla_jf_debug_level=",
                 "--xla_jf_dump_to=",
+                "--xla_mosaic_enable_dump_debug_info=",
                 "--xla_mosaic_dump_to=",
             )
         )
     ]
-    retained.append(f"--xla_jf_dump_to={raw_dir}")
+    retained.extend(
+        (
+            "--xla_mosaic_enable_dump_debug_info=true",
+            f"--xla_mosaic_dump_to={raw_dir}",
+        )
+    )
     return shlex.join(retained)
 
 
@@ -120,16 +126,21 @@ def _pass_ordinal(path: Path) -> int:
 
 
 def _select_final_bundle(raw_dir: Path) -> Path | None:
-    tlp_candidates = []
+    mxu_candidates = []
     for path in raw_dir.rglob("*"):
         if not path.is_file() or not path.name.endswith("-final_bundles.txt"):
             continue
-        if re.search(r"-TLP-\d+-final_bundles\.txt$", path.name):
-            tlp_candidates.append(path)
-    if not tlp_candidates:
+        text = path.read_text(encoding="utf-8", errors="replace")
+        if re.search(
+            r"\b(?:vmat(?:mul|prep|res)|matmul|mxu)\b",
+            text,
+            flags=re.IGNORECASE,
+        ):
+            mxu_candidates.append(path)
+    if not mxu_candidates:
         return None
     return max(
-        tlp_candidates,
+        mxu_candidates,
         key=lambda path: (
             _pass_ordinal(path),
             path.stat().st_mtime_ns,
@@ -173,7 +184,7 @@ def _run_case(
     case_id = f"m{m}_k{k}_n{n}"
     case_dir = artifact_root / "cases" / case_id
     dump_root = Path(
-        os.environ.get("MXU_JF_DUMP_ROOT", "/tmp/tpu_logs/mxu-jf-dumps")
+        os.environ.get("MXU_LLO_DUMP_ROOT", "/tmp/tpu_logs/mxu-llo-dumps")
     )
     raw_dir = dump_root / case_id
     if raw_dir.exists():
@@ -361,7 +372,7 @@ def main() -> None:
     _write_compatibility_view(artifact_root, results)
     summary = {
         "schema_version": 1,
-        "artifact_contract": "tensorcore_mxu_jf_bundle_sweep.v2",
+        "artifact_contract": "tensorcore_mxu_final_bundle_sweep.v3",
         "experiment_id": os.environ.get("FALCON_EXP_ID"),
         "created_at": dt.datetime.now(dt.timezone.utc).isoformat(),
         "source": {
