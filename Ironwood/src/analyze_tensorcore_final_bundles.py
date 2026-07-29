@@ -39,6 +39,26 @@ def _count(pattern: str, text: str) -> int:
     return len(re.findall(pattern, text, flags=re.IGNORECASE))
 
 
+def _strip_block_comments(text: str) -> str:
+    """Remove nested LLO block comments while preserving line boundaries."""
+    result: list[str] = []
+    depth = 0
+    index = 0
+    while index < len(text):
+        if text.startswith("/*", index):
+            depth += 1
+            index += 2
+        elif depth and text.startswith("*/", index):
+            depth -= 1
+            index += 2
+        else:
+            char = text[index]
+            if depth == 0 or char == "\n":
+                result.append(char)
+            index += 1
+    return "".join(result)
+
+
 def _register_numbers(pattern: str, text: str) -> list[int]:
     return sorted({int(value) for value in re.findall(pattern, text)})
 
@@ -84,6 +104,7 @@ def _analyze_case(bundle_path: Path) -> dict[str, Any]:
         int(case_match.group("n")),
     )
     text = bundle_path.read_text(encoding="utf-8", errors="replace")
+    executable_text = _strip_block_comments(text)
     bundle_indices = [
         int(match.group("index"), 0) for match in BUNDLE_RE.finditer(text)
     ]
@@ -175,8 +196,12 @@ def _analyze_case(bundle_path: Path) -> dict[str, Any]:
         },
         "memory": {
             "output_kind": _output_kind(text),
-            "dma_vmem_to_hbm": _count(r"\bdma\.vmem_to_hbm\b", text),
-            "dma_wait": _count(r"\bdma\.done\.wait\b", text),
+            "dma_vmem_to_hbm": _count(
+                r"=\s+dma\.vmem_to_hbm\b", executable_text
+            ),
+            "dma_wait": _count(
+                r"=\s+dma\.done\.wait\b", executable_text
+            ),
         },
         "spill_fill": {
             "mentions": _count(r"\b(?:spill|fill)\b", text),
