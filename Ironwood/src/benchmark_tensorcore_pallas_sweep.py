@@ -381,7 +381,7 @@ def main() -> None:
     _write_compatibility_view(artifact_root, results)
     summary = {
         "schema_version": 1,
-        "artifact_contract": "tensorcore_mxu_final_bundle_sweep.v3",
+        "artifact_contract": "tensorcore_mxu_final_bundle_sweep.v4",
         "experiment_id": os.environ.get("FALCON_EXP_ID"),
         "created_at": dt.datetime.now(dt.timezone.utc).isoformat(),
         "source": {
