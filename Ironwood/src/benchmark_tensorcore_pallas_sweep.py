@@ -112,7 +112,7 @@ def _libtpu_args(raw_dir: Path) -> str:
     ]
     retained.extend(
         (
-            "--xla_jf_debug_level=3",
+            "--xla_jf_debug_level=2",
             f"--xla_jf_dump_to={raw_dir}",
         )
     )
@@ -125,15 +125,19 @@ def _pass_ordinal(path: Path) -> int:
 
 
 def _select_final_bundle(raw_dir: Path) -> Path | None:
-    candidates = []
+    tlp_candidates = []
+    mxu_candidates = []
     for path in raw_dir.rglob("*"):
-        if not path.is_file() or path.suffix not in {".llo", ".txt"}:
+        if not path.is_file() or not path.name.endswith("-final_bundles.txt"):
             continue
         text = path.read_text(encoding="utf-8", errors="replace")
-        if re.search(r"\bbundle\b", text, flags=re.IGNORECASE) and re.search(
-            r"\bvmat(?:mul|prep|res)", text, flags=re.IGNORECASE
-        ):
-            candidates.append(path)
+        if re.search(r"-TLP-\d+-final_bundles\.txt$", path.name):
+            tlp_candidates.append(path)
+        if re.search(r"\bvmat(?:mul|prep|res)", text, flags=re.IGNORECASE):
+            mxu_candidates.append(path)
+    candidates = [
+        path for path in tlp_candidates if path in mxu_candidates
+    ] or mxu_candidates
     if not candidates:
         return None
     return max(
@@ -384,15 +388,16 @@ def main() -> None:
     )
     print(json.dumps(summary, sort_keys=True), flush=True)
 
-    correctness_failures = [
-        result
-        for result in results
-        if result["reason"] == "correctness_failed"
+    failed_results = [
+        result for result in results if result["status"] == "failed"
     ]
-    if correctness_failures:
+    if failed_results:
         raise RuntimeError(
-            "correctness failed for "
-            + ", ".join(result["case_id"] for result in correctness_failures)
+            "MXU sweep failed for "
+            + ", ".join(
+                f"{result['case_id']} ({result['reason']})"
+                for result in failed_results
+            )
         )
 
 

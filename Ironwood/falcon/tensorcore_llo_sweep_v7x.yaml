@@ -10,7 +10,7 @@ cluster_name: tpu-training-antgroup
 profile: true
 tags: [profile, operator-optimization, pallas, mxu-reverse-engineering, shape-sweep]
 model_version: tensorcore-mxu-jf-bundle-v2
-config: '{"cases":[[256,256,256],[128,256,256],[255,256,256],[257,256,256],[512,256,256],[256,128,256],[256,255,256],[256,257,256],[256,512,256],[256,256,128],[256,256,255],[256,256,257],[256,256,512],[257,257,257]],"program_count_per_case":1,"falcon_pod_count":1,"dump":"jf_debug_level_3","input":"bf16","accumulator":"fp32","output":"bf16"}'
+config: '{"cases":[[256,256,256],[128,256,256],[255,256,256],[257,256,256],[512,256,256],[256,128,256],[256,255,256],[256,257,256],[256,512,256],[256,256,128],[256,256,255],[256,256,257],[256,256,512],[257,257,257]],"program_count_per_case":1,"falcon_pod_count":1,"dump":"jf_debug_level_2_tlp_final_bundle","input":"bf16","accumulator":"fp32","output":"bf16"}'
 role_to_task_spec:
   worker:
     replica: 1
