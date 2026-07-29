@@ -2,11 +2,12 @@
 """Sweep exact-shape MXU cases in one Falcon TPU pod.
 
 Each case runs in a fresh Python subprocess so that libtpu can bind
-``--xla_mosaic_dump_to`` to a case-specific directory at initialization.
-There is still only one Falcon workload pod and one TPU allocation for the
-whole sweep. Mosaic debug info is enabled so the backend emits bundled MXU
-LLO. Only the final MXU bundle is copied into the Falcon artifact. A failed
-shape is recorded and the remaining shapes continue.
+``--xla_jf_dump_to`` to a case-specific directory at initialization. There is
+still only one Falcon workload pod and one TPU allocation for the whole sweep.
+JF text dumping and annotations are enabled so the backend emits final bundled
+MXU LLO. Only the largest final bundle containing real MXU instructions is
+copied into the Falcon artifact. A failed shape is recorded and the remaining
+shapes continue.
 """
 
 from __future__ import annotations
@@ -106,6 +107,10 @@ def _libtpu_args(raw_dir: Path) -> str:
             (
                 "--xla_jf_debug_level=",
                 "--xla_jf_dump_to=",
+                "--xla_jf_dump_llo_text=",
+                "--xla_jf_emit_annotations=",
+                "--xla_enable_custom_call_region_trace=",
+                "--xla_xprof_register_llo_debug_info=",
                 "--xla_mosaic_enable_dump_debug_info=",
                 "--xla_mosaic_dump_to=",
             )
@@ -113,8 +118,11 @@ def _libtpu_args(raw_dir: Path) -> str:
     ]
     retained.extend(
         (
-            "--xla_mosaic_enable_dump_debug_info=true",
-            f"--xla_mosaic_dump_to={raw_dir}",
+            f"--xla_jf_dump_to={raw_dir}",
+            "--xla_jf_dump_llo_text=true",
+            "--xla_jf_emit_annotations=true",
+            "--xla_enable_custom_call_region_trace=true",
+            "--xla_xprof_register_llo_debug_info=true",
         )
     )
     return shlex.join(retained)
@@ -132,7 +140,7 @@ def _select_final_bundle(raw_dir: Path) -> Path | None:
             continue
         text = path.read_text(encoding="utf-8", errors="replace")
         if re.search(
-            r"\b(?:vmat(?:mul|prep|res)|matmul|mxu)\b",
+            r"\b(?:vmat(?:mul|push\d*|prep(?:\.[a-z0-9]+)*|res))\b",
             text,
             flags=re.IGNORECASE,
         ):
@@ -142,6 +150,7 @@ def _select_final_bundle(raw_dir: Path) -> Path | None:
     return max(
         mxu_candidates,
         key=lambda path: (
+            path.stat().st_size,
             _pass_ordinal(path),
             path.stat().st_mtime_ns,
             path.name,
