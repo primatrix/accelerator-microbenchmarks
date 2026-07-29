@@ -2,9 +2,11 @@
 """Sweep exact-shape MXU cases in one Falcon TPU pod.
 
 Each case runs in a fresh Python subprocess so that libtpu can bind
-``--xla_mosaic_dump_to`` to a case-specific directory at initialization.
+``--xla_jf_dump_to`` to a case-specific directory at initialization.
 There is still only one Falcon workload pod and one TPU allocation for the
-whole sweep. A failed shape is recorded and the remaining shapes continue.
+whole sweep. Only the last JF LLO containing bundled MXU instructions is
+copied into the Falcon artifact. A failed shape is recorded and the remaining
+shapes continue.
 """
 
 from __future__ import annotations
@@ -15,6 +17,7 @@ import hashlib
 import json
 import os
 import platform
+import re
 import shlex
 import shutil
 import subprocess
@@ -99,17 +102,48 @@ def _libtpu_args(raw_dir: Path) -> str:
     retained = [
         flag
         for flag in inherited
-        if not flag.startswith("--xla_mosaic_dump_to=")
+        if not flag.startswith(
+            (
+                "--xla_jf_debug_level=",
+                "--xla_jf_dump_to=",
+                "--xla_mosaic_dump_to=",
+            )
+        )
     ]
-    required = (
-        "--xla_enable_custom_call_region_trace=true",
-        "--xla_xprof_register_llo_debug_info=true",
+    retained.extend(
+        (
+            "--xla_jf_debug_level=3",
+            f"--xla_jf_dump_to={raw_dir}",
+        )
     )
-    for flag in required:
-        if flag not in retained:
-            retained.append(flag)
-    retained.append(f"--xla_mosaic_dump_to={raw_dir}")
     return shlex.join(retained)
+
+
+def _pass_ordinal(path: Path) -> int:
+    matches = re.findall(r"-(\d+)-", path.name)
+    return int(matches[-1]) if matches else -1
+
+
+def _select_final_bundle(raw_dir: Path) -> Path | None:
+    candidates = []
+    for path in raw_dir.rglob("*"):
+        if not path.is_file() or path.suffix not in {".llo", ".txt"}:
+            continue
+        text = path.read_text(encoding="utf-8", errors="replace")
+        if re.search(r"\bbundle\b", text, flags=re.IGNORECASE) and re.search(
+            r"\bvmat(?:mul|prep|res)", text, flags=re.IGNORECASE
+        ):
+            candidates.append(path)
+    if not candidates:
+        return None
+    return max(
+        candidates,
+        key=lambda path: (
+            _pass_ordinal(path),
+            path.stat().st_mtime_ns,
+            path.name,
+        ),
+    )
 
 
 def _index_llo(raw_dir: Path, case_id: str) -> dict[str, Any]:
@@ -146,7 +180,12 @@ def _run_case(
     m, k, n = shape
     case_id = f"m{m}_k{k}_n{n}"
     case_dir = artifact_root / "cases" / case_id
-    raw_dir = case_dir / "compiler" / "llo" / "raw"
+    dump_root = Path(
+        os.environ.get("MXU_JF_DUMP_ROOT", "/tmp/tpu_logs/mxu-jf-dumps")
+    )
+    raw_dir = dump_root / case_id
+    if raw_dir.exists():
+        shutil.rmtree(raw_dir)
     raw_dir.mkdir(parents=True, exist_ok=True)
 
     command = [
@@ -200,9 +239,21 @@ def _run_case(
     )
 
     file_index = _index_llo(raw_dir, case_id)
+    selected_bundle = _select_final_bundle(raw_dir)
+    final_bundle = case_dir / "compiler" / "llo" / "final_bundle.llo"
+    if selected_bundle is not None:
+        final_bundle.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(selected_bundle, final_bundle)
+        file_index["selected_final_bundle"] = {
+            "source_path": str(selected_bundle.relative_to(raw_dir)),
+            "artifact_path": str(final_bundle.relative_to(artifact_root)),
+            "size_bytes": final_bundle.stat().st_size,
+            "sha256": _sha256(final_bundle),
+        }
+    else:
+        file_index["selected_final_bundle"] = None
     index_path = case_dir / "compiler" / "llo" / "file_index.json"
     _write_json(index_path, file_index)
-    final_candidates = sorted(raw_dir.glob("*post-finalize-llo.txt"))
     metrics_path = case_dir / "metrics.json"
     metrics = (
         json.loads(metrics_path.read_text(encoding="utf-8"))
@@ -216,9 +267,9 @@ def _run_case(
     elif returncode != 0:
         status = "failed"
         reason = "benchmark_process_failed"
-    elif not final_candidates:
+    elif selected_bundle is None:
         status = "failed"
-        reason = "final_llo_missing"
+        reason = "final_bundle_missing"
     elif not metrics or not metrics["correctness"]["passed"]:
         status = "failed"
         reason = "correctness_failed"
@@ -239,13 +290,14 @@ def _run_case(
         "command": command,
         "libtpu_init_args": environment["LIBTPU_INIT_ARGS"],
         "llo_file_count": file_index["file_count"],
-        "final_llo": (
+        "final_bundle": (
             {
-                "path": str(final_candidates[-1].relative_to(artifact_root)),
-                "size_bytes": final_candidates[-1].stat().st_size,
-                "sha256": _sha256(final_candidates[-1]),
+                "path": str(final_bundle.relative_to(artifact_root)),
+                "source_dump": str(selected_bundle.relative_to(raw_dir)),
+                "size_bytes": final_bundle.stat().st_size,
+                "sha256": _sha256(final_bundle),
             }
-            if final_candidates
+            if selected_bundle is not None
             else None
         ),
         "correctness": metrics["correctness"] if metrics else None,
@@ -262,10 +314,11 @@ def _write_compatibility_view(
     for result in results:
         case_id = result["case_id"]
         case_dir = artifact_root / "cases" / case_id
-        raw_dir = case_dir / "compiler" / "llo" / "raw"
         target = rank_dir / "compiler" / "llo" / case_id
-        if raw_dir.is_dir():
-            shutil.copytree(raw_dir, target, dirs_exist_ok=True)
+        final_bundle = case_dir / "compiler" / "llo" / "final_bundle.llo"
+        if final_bundle.is_file():
+            target.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(final_bundle, target / final_bundle.name)
         metrics_path = case_dir / "metrics.json"
         if metrics_path.is_file():
             metrics_lines.append(metrics_path.read_text(encoding="utf-8").strip())
@@ -301,7 +354,7 @@ def main() -> None:
     _write_compatibility_view(artifact_root, results)
     summary = {
         "schema_version": 1,
-        "artifact_contract": "tensorcore_mxu_sweep.v1",
+        "artifact_contract": "tensorcore_mxu_jf_bundle_sweep.v2",
         "experiment_id": os.environ.get("FALCON_EXP_ID"),
         "created_at": dt.datetime.now(dt.timezone.utc).isoformat(),
         "source": {
