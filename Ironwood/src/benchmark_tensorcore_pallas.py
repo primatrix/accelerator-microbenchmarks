@@ -333,6 +333,8 @@ def main() -> None:
 
     _write_json(artifact_root / "manifest.json", manifest)
     _write_json(artifact_root / "environment.json", environment)
+    _write_json(case_dir / "manifest.json", manifest)
+    _write_json(case_dir / "environment.json", environment)
     _write_json(case_dir / "case.json", case)
     _write_json(case_dir / "metrics.json", metrics)
 

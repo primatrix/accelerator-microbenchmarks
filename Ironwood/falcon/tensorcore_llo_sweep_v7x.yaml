@@ -1,0 +1,63 @@
+# One-pod exact-shape sweep for MXU behavior reverse engineering on TPU v7x.
+#
+# Every shape runs as a separate JAX subprocess inside this one Falcon pod.
+# That permits a unique xla_mosaic_dump_to directory per case while reusing
+# one TPU allocation for the complete sweep.
+name: tensorcore-llo-v7x-shape-sweep
+exp_type: PROFILING
+artifact_type: operator-profile
+cluster_name: tpu-training-antgroup
+profile: true
+tags: [profile, operator-optimization, pallas, mxu-reverse-engineering, shape-sweep]
+model_version: tensorcore-mxu-model-v1
+config: '{"cases":[[256,256,256],[128,256,256],[255,256,256],[257,256,256],[512,256,256],[256,128,256],[256,255,256],[256,257,256],[256,512,256],[256,256,128],[256,256,255],[256,256,257],[256,256,512]],"program_count_per_case":1,"falcon_pod_count":1,"input":"bf16","accumulator":"fp32","output":"bf16"}'
+role_to_task_spec:
+  worker:
+    replica: 1
+    image: us-docker.pkg.dev/cloud-tpu-images/jax-ai-image/tpu:jax0.9.0-rev1
+    device_count: 8
+    device_type: v7x
+    device_topo: 2x2x1
+    envs:
+      MXU_WARMUP: "1"
+      MXU_REPEAT: "3"
+      MXU_CASE_TIMEOUT_SECONDS: "600"
+      MXU_SOURCE_REPOSITORY: https://github.com/primatrix/accelerator-microbenchmarks.git
+      MXU_SOURCE_REF: codex/mxu-behavior-modeling
+      TMPDIR: /tmp/tpu_logs/tmp
+      PIP_CACHE_DIR: /tmp/tpu_logs/pip-cache
+      UV_CACHE_DIR: /tmp/tpu_logs/uv-cache
+      PYTHONUNBUFFERED: "1"
+    command: |
+      set -eu
+      ulimit -c 0
+      mkdir -p "$TMPDIR" "$PIP_CACHE_DIR" "$UV_CACHE_DIR"
+
+      SOURCE_ROOT=/tmp/tpu_logs/accelerator-microbenchmarks
+      ARTIFACT_ROOT="${ARTIFACT_LOCAL_DIR:-/tmp/tensorcore-mxu-sweep-artifact}"
+      export JAX_COMPILATION_CACHE_DIR=/tmp/tpu_logs/jax-compilation-cache
+      mkdir -p "$JAX_COMPILATION_CACHE_DIR" "$ARTIFACT_ROOT"
+
+      git clone --depth 1 --branch "$MXU_SOURCE_REF" \
+        "$MXU_SOURCE_REPOSITORY" "$SOURCE_ROOT"
+      export MXU_SOURCE_COMMIT
+      MXU_SOURCE_COMMIT="$(git -C "$SOURCE_ROOT" rev-parse HEAD)"
+
+      python3 "$SOURCE_ROOT/Ironwood/src/benchmark_tensorcore_pallas_sweep.py" \
+        --shape 256,256,256 \
+        --shape 128,256,256 \
+        --shape 255,256,256 \
+        --shape 257,256,256 \
+        --shape 512,256,256 \
+        --shape 256,128,256 \
+        --shape 256,255,256 \
+        --shape 256,257,256 \
+        --shape 256,512,256 \
+        --shape 256,256,128 \
+        --shape 256,256,255 \
+        --shape 256,256,257 \
+        --shape 256,256,512 \
+        --warmup "$MXU_WARMUP" \
+        --repeat "$MXU_REPEAT" \
+        --case-timeout-seconds "$MXU_CASE_TIMEOUT_SECONDS" \
+        --artifact-dir "$ARTIFACT_ROOT"
