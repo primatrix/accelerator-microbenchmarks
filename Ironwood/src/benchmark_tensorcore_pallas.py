@@ -29,10 +29,13 @@ from jax import lax
 from jax.experimental import pallas as pl
 
 
-INPUT_DTYPE = jnp.bfloat16
 ACCUMULATOR_DTYPE = jnp.float32
 OUTPUT_DTYPE = jnp.bfloat16
 KERNEL_NAME = "pallas_lax_dot_single_program"
+INPUT_DTYPES = {
+    "bf16": jnp.bfloat16,
+    "fp8_e4m3fn": jnp.float8_e4m3fn,
+}
 
 
 def _parse_args() -> argparse.Namespace:
@@ -42,6 +45,17 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument("--m", type=int, required=True)
     parser.add_argument("--k", type=int, required=True)
     parser.add_argument("--n", type=int, required=True)
+    parser.add_argument(
+        "--input-dtype",
+        choices=tuple(INPUT_DTYPES),
+        default="bf16",
+        help="dtype used for both dot operands",
+    )
+    parser.add_argument(
+        "--allow-correctness-failure",
+        action="store_true",
+        help="record numerical mismatches without failing the dump process",
+    )
     parser.add_argument("--warmup", type=int, default=5)
     parser.add_argument("--repeat", type=int, default=20)
     parser.add_argument("--artifact-dir", type=Path, required=True)
@@ -113,7 +127,11 @@ def _build_single_program_dot(m: int, k: int, n: int):
 
 
 def _deterministic_inputs(
-    m: int, k: int, n: int, device: jax.Device
+    m: int,
+    k: int,
+    n: int,
+    device: jax.Device,
+    input_dtype: jnp.dtype,
 ) -> tuple[jax.Array, jax.Array, np.ndarray, np.ndarray]:
     # Dyadic values make the FP32 reference accumulation exact for the planned
     # shape range, so a BF16 bit-for-bit result check is meaningful.
@@ -122,8 +140,8 @@ def _deterministic_inputs(
     lhs_host = (lhs_host.astype(np.float32) / 8.0).astype(np.float32)
     rhs_host = (rhs_host.astype(np.float32) / 8.0).astype(np.float32)
 
-    lhs = jax.device_put(jnp.asarray(lhs_host, dtype=INPUT_DTYPE), device)
-    rhs = jax.device_put(jnp.asarray(rhs_host, dtype=INPUT_DTYPE), device)
+    lhs = jax.device_put(jnp.asarray(lhs_host, dtype=input_dtype), device)
+    rhs = jax.device_put(jnp.asarray(rhs_host, dtype=input_dtype), device)
     lhs_effective = np.asarray(jax.device_get(lhs), dtype=np.float32)
     rhs_effective = np.asarray(jax.device_get(rhs), dtype=np.float32)
     return lhs, rhs, lhs_effective, rhs_effective
@@ -155,10 +173,11 @@ def main() -> None:
     if not devices:
         raise RuntimeError("JAX reported no devices")
     selected_device = devices[0]
+    input_dtype = INPUT_DTYPES[args.input_dtype]
 
     compiled_call = _build_single_program_dot(args.m, args.k, args.n)
     lhs, rhs, lhs_effective, rhs_effective = _deterministic_inputs(
-        args.m, args.k, args.n, selected_device
+        args.m, args.k, args.n, selected_device, input_dtype
     )
 
     # The first completed invocation forces compilation and is reported
@@ -265,8 +284,8 @@ def main() -> None:
         "created_at": now,
         "shape": {"m": args.m, "k": args.k, "n": args.n},
         "dtypes": {
-            "lhs": str(INPUT_DTYPE),
-            "rhs": str(INPUT_DTYPE),
+            "lhs": str(input_dtype),
+            "rhs": str(input_dtype),
             "accumulator": str(ACCUMULATOR_DTYPE),
             "output": str(OUTPUT_DTYPE),
         },
@@ -325,6 +344,7 @@ def main() -> None:
         },
         "correctness": {
             "passed": correctness_passed,
+            "required": not args.allow_correctness_failure,
             "comparison": "bitwise equality after BF16 output rounding",
             "mismatch_count": mismatch_count,
             "max_abs_error": max_abs_error,
@@ -350,7 +370,7 @@ def main() -> None:
             sort_keys=True,
         )
     )
-    if not correctness_passed:
+    if not correctness_passed and not args.allow_correctness_failure:
         raise RuntimeError(
             f"correctness failed: {mismatch_count} mismatches, "
             f"max_abs_error={max_abs_error}"

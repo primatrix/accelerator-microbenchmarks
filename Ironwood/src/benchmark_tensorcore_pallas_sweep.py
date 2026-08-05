@@ -60,6 +60,16 @@ def _parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--warmup", type=int, default=1)
     parser.add_argument("--repeat", type=int, default=3)
+    parser.add_argument(
+        "--input-dtype",
+        choices=("bf16", "fp8_e4m3fn"),
+        default="bf16",
+    )
+    parser.add_argument(
+        "--allow-correctness-failure",
+        action="store_true",
+        help="keep a case when its LLO exists but its numerical check fails",
+    )
     parser.add_argument("--case-timeout-seconds", type=int, default=600)
     parser.add_argument("--artifact-dir", type=Path, required=True)
     args = parser.parse_args()
@@ -188,6 +198,8 @@ def _run_case(
     warmup: int,
     repeat: int,
     timeout_seconds: int,
+    input_dtype: str,
+    allow_correctness_failure: bool,
 ) -> dict[str, Any]:
     m, k, n = shape
     case_id = f"m{m}_k{k}_n{n}"
@@ -209,6 +221,8 @@ def _run_case(
         str(k),
         "--n",
         str(n),
+        "--input-dtype",
+        input_dtype,
         "--warmup",
         str(warmup),
         "--repeat",
@@ -216,6 +230,8 @@ def _run_case(
         "--artifact-dir",
         str(artifact_root),
     ]
+    if allow_correctness_failure:
+        command.append("--allow-correctness-failure")
     environment = os.environ.copy()
     environment["LIBTPU_INIT_ARGS"] = _libtpu_args(raw_dir)
     environment["MXU_ENABLE_XPROF"] = "0"
@@ -287,7 +303,11 @@ def _run_case(
     elif selected_bundle is None:
         status = "failed"
         reason = "final_bundle_missing"
-    elif metrics and not metrics["correctness"]["passed"]:
+    elif (
+        metrics
+        and not metrics["correctness"]["passed"]
+        and not allow_correctness_failure
+    ):
         status = "failed"
         reason = "correctness_failed"
     elif not metrics and not known_report_abort:
@@ -374,6 +394,8 @@ def main() -> None:
             args.warmup,
             args.repeat,
             args.case_timeout_seconds,
+            args.input_dtype,
+            args.allow_correctness_failure,
         )
         results.append(result)
         print(json.dumps(result, sort_keys=True), flush=True)
@@ -381,7 +403,7 @@ def main() -> None:
     _write_compatibility_view(artifact_root, results)
     summary = {
         "schema_version": 1,
-        "artifact_contract": "tensorcore_mxu_final_bundle_sweep.v4",
+        "artifact_contract": "tensorcore_mxu_final_bundle_sweep.v5",
         "experiment_id": os.environ.get("FALCON_EXP_ID"),
         "created_at": dt.datetime.now(dt.timezone.utc).isoformat(),
         "source": {
@@ -391,6 +413,8 @@ def main() -> None:
         },
         "warmup": args.warmup,
         "repeat": args.repeat,
+        "input_dtype": args.input_dtype,
+        "allow_correctness_failure": args.allow_correctness_failure,
         "case_timeout_seconds": args.case_timeout_seconds,
         "case_count": len(results),
         "succeeded": sum(result["status"] == "succeeded" for result in results),
