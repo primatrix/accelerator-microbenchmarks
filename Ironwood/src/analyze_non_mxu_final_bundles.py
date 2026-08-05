@@ -53,11 +53,15 @@ def _instructions(path: Path) -> Counter[str]:
 def _family(opcode: str) -> str:
     if opcode.startswith("vmat") or opcode.startswith("vlatch"):
         return "mxu"
-    if opcode.startswith(("vtanh", "vpow2", "vrecip", "vlog", "vrsqrt", "vsig", "vsin", "vcos", "verf")):
+    if opcode.startswith(("vpop.eup", "vtanh", "vpow2", "vrecip", "vlog", "vrsqrt", "vsig", "vsin", "vcos", "verf")):
         return "eup"
-    if "reduce" in opcode or opcode.startswith(("vperm", "vxpose", "vtranspose", "vrotate", "vbroadcast")):
+    if ".xlane" in opcode or "reduce" in opcode or opcode.startswith("vpop.xlane"):
         return "xlu_reduce"
-    if opcode.startswith(("vcmp", "vsel", "vmask", "vcreate_mask")):
+    if opcode.startswith(("vperm", "vrot", "vxpose", "vtranspose", "vrotate", "vbroadcast", "vpop.permute", "vpop.trf")):
+        return "xlu_permute"
+    if opcode.startswith(("vcvt", "vpack", "vunpack")):
+        return "convert_pack"
+    if opcode.startswith(("vcmp", "vsel", "vcmask", "vmand", "vmmov", "vmneg", "vmor", "vmxor", "vmask", "vcreate_mask")):
         return "vector_mask"
     if opcode.startswith(("scmp", "pneg", "pnand", "por", "pmov")):
         return "predicate"
@@ -70,6 +74,29 @@ def _family(opcode: str) -> str:
     if opcode.startswith("dma"):
         return "dma"
     return "control_other"
+
+
+VECTOR_COMPUTE_FAMILIES = {
+    "vpu", "eup", "xlu_reduce", "xlu_permute", "convert_pack", "vector_mask",
+}
+COMPUTE_FAMILIES = VECTOR_COMPUTE_FAMILIES | {"spu", "predicate", "mxu"}
+
+
+def _source_compute_counts(
+    counts: Counter[str], mode: str
+) -> dict[str, int]:
+    """Remove Pallas call scaffolding from source-primitive attribution.
+
+    Vector cases should not attribute scalar bounds-check and DMA-loop setup to
+    the JAX primitive under test. Scalar-grid probes intentionally exercise the
+    SPU, so their scalar/predicate instructions remain compound correlations.
+    """
+    families = COMPUTE_FAMILIES if mode == "scalar_grid" else VECTOR_COMPUTE_FAMILIES
+    return {
+        opcode: count
+        for opcode, count in counts.items()
+        if _family(opcode) in families
+    }
 
 
 def _load_json(path: Path) -> dict[str, Any]:
@@ -97,14 +124,17 @@ def analyze(artifact_root: Path) -> dict[str, Any]:
         compute_counts = {
             opcode: count
             for opcode, count in counts.items()
-            if _family(opcode) in {"vpu", "spu", "eup", "xlu_reduce", "vector_mask", "predicate", "mxu"}
+            if _family(opcode) in COMPUTE_FAMILIES
         }
+        source_compute_counts = _source_compute_counts(
+            counts, status["case"].get("mode", "vector")
+        )
         families = Counter()
         for opcode, count in counts.items():
             families[_family(opcode)] += count
         primitives = status["case"]["primitives"]
         for primitive in primitives:
-            for opcode, count in sorted(compute_counts.items()):
+            for opcode, count in sorted(source_compute_counts.items()):
                 mapping_rows.append(
                     {
                         "case_id": case_id,
@@ -126,10 +156,15 @@ def analyze(artifact_root: Path) -> dict[str, Any]:
                 "unique_opcodes": len(counts),
                 "family_counts": dict(sorted(families.items())),
                 "compute_opcodes": dict(sorted(compute_counts.items())),
+                "source_compute_opcodes": dict(sorted(source_compute_counts.items())),
             }
         )
     mxu = {opcode: count for opcode, count in global_counts.items() if _family(opcode) == "mxu"}
-    compute = {opcode: count for opcode, count in global_counts.items() if _family(opcode) in {"vpu", "spu", "eup", "xlu_reduce", "vector_mask", "predicate"}}
+    compute = {
+        opcode: count
+        for opcode, count in global_counts.items()
+        if _family(opcode) in COMPUTE_FAMILIES - {"mxu"}
+    }
     return {
         "schema_version": 1,
         "artifact_root": str(artifact_root),
@@ -161,11 +196,11 @@ def _report(summary: dict[str, Any]) -> str:
     lines.extend(["\n## Primitive-correlated observations\n\n", "| Case | JAX/Pallas primitives | Observed compute LLO | Status |\n", "|---|---|---|---|\n"])
     for case in summary["cases"]:
         primitives = ", ".join(f"`{p}`" for p in case["primitives"])
-        opcodes = ", ".join(f"`{op}`×{count}" for op, count in case["compute_opcodes"].items()) or "—"
+        opcodes = ", ".join(f"`{op}`×{count}" for op, count in case["source_compute_opcodes"].items()) or "—"
         lines.append(f"| `{case['case_id']}` | {primitives} | {opcodes} | {case['status']} |\n")
     lines.extend([
         "\n## Attribution rule\n\n",
-        "A one-primitive case supports an isolated source→LLO observation. A compound case only establishes that the listed LLO mnemonics occur in that source primitive set; it does not prove a 1:1 mapping. Final scheduled bundles are authoritative for emitted instructions, while unsupported/optimized-away enum members remain unobserved.\n",
+        "Vector cases exclude scalar bounds-check, address, and DMA-loop scaffolding from source attribution. A one-primitive case supports an isolated source→LLO observation. A compound case only establishes that the listed LLO mnemonics occur in that source primitive set; it does not prove a 1:1 mapping. Scalar-grid probes remain compound correlations because loop control and the tested SPU operations share the scalar slot. Final scheduled bundles are authoritative for emitted instructions, while unsupported/optimized-away enum members remain unobserved.\n",
     ])
     return "".join(lines)
 

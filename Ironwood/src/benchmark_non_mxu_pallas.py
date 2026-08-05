@@ -223,7 +223,9 @@ def _apply(case_id: str, *xs: jax.Array) -> jax.Array:
         return jnp.broadcast_to(value[:, None], x.shape)
     if case_id == "transpose_f32": return jnp.transpose(x, (1, 0))
     if case_id == "iota_f32":
-        seq = jnp.arange(x.shape[1], dtype=x.dtype)[None, :]
+        # Mosaic TPU requires tpu.iota itself to produce an integer/index
+        # vector. Convert explicitly when the consuming computation is f32.
+        seq = jnp.arange(x.shape[1], dtype=jnp.int32).astype(x.dtype)[None, :]
         return x + jnp.broadcast_to(seq, x.shape)
     if case_id == "roll_f32":
         return pltpu.roll(x, 1, axis=1)
