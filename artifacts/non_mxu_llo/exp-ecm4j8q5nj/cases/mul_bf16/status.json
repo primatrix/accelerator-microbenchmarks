@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "case_id": "mul_bf16",
+  "case": {
+    "case_id": "mul_bf16",
+    "family": "vpu",
+    "primitives": [
+      "lax.mul"
+    ],
+    "input_kinds": [
+      "bf16_signed",
+      "bf16_other"
+    ],
+    "output_dtype": "bfloat16",
+    "shape": [
+      8,
+      128
+    ],
+    "output_shape": [
+      8,
+      128
+    ],
+    "mode": "vector",
+    "verify": true
+  },
+  "status": "succeeded",
+  "final_bundle": {
+    "path": "cases/mul_bf16/compiler/llo/final_bundle.llo",
+    "sha256": "bcac20ad78f04c10847462e09e93828443f437f490a8c02bc36df32c552788fe"
+  }
+}

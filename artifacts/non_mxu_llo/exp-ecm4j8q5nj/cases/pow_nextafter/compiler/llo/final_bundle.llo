@@ -1,0 +1,79 @@
+= control target key start
+LH: loop header
+LB: loop body
+LE: loop exit
+PB: predicated region body
+PF: predicated region fallthrough
+CT: control target
+= control target key end
+
+     0   :  { %s268_s0 = inlined_call_operand.vmem [shape: f32[8,128], index: 0, kind: input, shape index: {}] /* input window allocation for operator input 0. The window shape is f32[8,128], while the full shape is f32[8,128]. The u8 shape/size shown above represents the raw byte size of this window in VMEM.  */  ;;  %s269_s1 = inlined_call_operand.vmem [shape: f32[8,128], index: 1, kind: input, shape index: {}] /* input window allocation for operator input 1. The window shape is f32[8,128], while the full shape is f32[8,128]. The u8 shape/size shown above represents the raw byte size of this window in VMEM.  */  ;;  %s270_s2 = inlined_call_operand.hbm [shape: f32[8,128], index: 2, kind: output, shape index: {}] /* output window allocation for operator output 0. The window shape is f32[8,128], while the full shape is f32[8,128]. The u8 shape/size shown above represents the raw byte size of this window in VMEM.  */ } /* entry bundle: %non_mxu_pow_nextafter.1 = custom-call(%copy-done, %copy-done.1) */
+   0x1   :  { %v164_v0 = vld [vmem:[%s268_s0] sm:$0xff] }
+   0x2   :  { %v169_v1 = vld [vmem:[%s269_s1] sm:$0xff]  ;;  %v172_v2 = vand.u32 2147483647, %v164_v0 }
+   0x3   :  { %v175_v3 = vand.u32 2147483647, %v169_v1 }
+   0x4   :  { %7 = vsyncpa [#allocation3], 0  ;;  %110 = vlog2.f32 %v172_v2  ;;  %v63_v5 = vtrunc.f32 %v169_v1  ;;  %v25_v7 = vand.u32 2147483648, %v164_v0  ;;  %v26_v8 = vand.u32 2147483648, %v169_v1  ;;  %s145_s0 = smov [#allocation2] /* materialized constant */ }
+   0x5   :  { %v67_v4 = vtrunc.f32 %v175_v3  ;;  %vm59_vm0 = vcmp.eq.f32.partialorder %v175_v3, 2139095040  ;;  %vm29_vm4 = vcmp.gt.u32.totalorder %v172_v2, %v175_v3  ;;  %vm62_vm5 = vcmp.lt.f32.partialorder %v169_v1, 0  ;;  %s46_s1 = sshll.u32 %s145_s0, 4  ;;  %s47_s1 = int_to_ptr.vmem [resolvable:$true] %s46_s1 }
+   0x6   :  { %vm64_vm1 = vcmp.ne.f32.partialorder %v169_v1, %v63_v5  ;;  %vm28_vm3 = vcmp.ne.s32.totalorder %v25_v7, %v26_v8  ;;  %vm75_vm6 = vcmp.eq.f32.partialorder %v164_v0, 0  ;;  %vm78_vm8 = vcmp.gt.f32.partialorder %v172_v2, 1065353216  ;;  %s114_s13 = scalar_lea.vmem %s47_s1, 128  ;;  %p119_p1 = scmp.lt.s32.totalorder %s47_s1, %s47_s1 }
+   0x7   :  { %v68_v6 = vcvt.f32.s32 %v67_v4  ;;  %vm187_vm2 = vmor %vm64_vm1, %vm59_vm0  ;;  %vm74_vm11 = vcmp.lt.f32.partialorder %v164_v0, 0  ;;  %v142_v15 = vmov 2139095040 /* materialized constant */  ;;  %vm66_vm14 = vcmp.lt.f32.partialorder %v175_v3, 1266679808  ;;  %p115_p0 = scmp.ne.s32.totalorder %s47_s1, %s114_s13  ;;  %p120_p2 = scmp.lt.s32.totalorder %s114_s13, %s114_s13 }
+   0x8   :  { %vm71_vm7 = vmneg %vm187_vm2  ;;  %v94_v16 = vsel /*vm=*/%vm62_vm5, /*on_true_vy=*/0, /*on_false_vx=*/%v142_v15  ;;  %v27_v17 = vor.u32 1, %v26_v8  ;;  %v143_v18 = vmov 1 /* materialized constant */  ;;  %v144_v23 = vmov 0 /* materialized constant */ }
+   0x9   :  { %v69_v12 = vand.u32 1, %v68_v6  ;;  %vm30_vm10 = vmor %vm29_vm4, %vm28_vm3  ;;  %vm24_vm3 = vcmp.eq.s32.totalorder %v175_v3, 0  ;;  %v95_v21 = vxor.u32 2147483648, %v94_v16  ;;  %v82_v24 = vsel /*vm=*/%vm62_vm5, /*on_true_vy=*/2139095040, /*on_false_vx=*/%v144_v23  ;;  %p121_p3 = por %p120_p2, %p119_p1 }
+   0xa   :  { %vm203_vm12 = vmand %vm62_vm5, %vm75_vm6  ;;  %v31_v19 = vsel /*vm=*/%vm30_vm10, /*on_true_vy=*/4294967295, /*on_false_vx=*/%v143_v18  ;;  %v33_v25 = vsel /*vm=*/%vm24_vm3, /*on_true_vy=*/%v169_v1, /*on_false_vx=*/%v27_v17  ;;  %vm99_vm10 = vcmp.ne.f32.partialorder %v164_v0, %v164_v0 }
+   0xb   :  { %vm70_vm9 = vcmp.eq.s32.totalorder %v69_v12, 1  ;;  %vm209_vm13 = vmxor %vm62_vm5, %vm78_vm8  ;;  %v32_v22 = vadd.s32 %v31_v19, %v164_v0  ;;  %vm77_vm8 = vcmp.lt.s32.totalorder %v164_v0, 0  ;;  %vm100_vm5 = vcmp.ne.f32.partialorder %v169_v1, %v169_v1  ;;  %p122_p4 = pnand %p121_p3, %p115_p0 }
+   0xc   :  { %vm72_vm15 = vmand %vm70_vm9, %vm71_vm7  ;;  %vm91_vm9 = vcmp.eq.f32.partialorder %v164_v0, 3212836864 }
+   0xd   :  { %vm220_vm1 = vmand %vm74_vm11, %vm187_vm2  ;;  %vm23_vm2 = vcmp.eq.s32.totalorder %v172_v2, 0 }
+   0xe   :  { %v111_v9 = vpop.eup %110  ;;  %vm89_vm4 = vmor %vm203_vm12, %vm209_vm13  ;;  %vm22_vm13 = vcmp.eq.f32.partialorder %v164_v0, %v169_v1  ;;  %v34_v31 = vsel /*vm=*/%vm23_vm2, /*on_true_vy=*/%v33_v25, /*on_false_vx=*/%v32_v22 }
+   0xf   :  { %v56_v10 = vmul.f32 %v111_v9, %v169_v1  ;;  %vm73_vm7 = vmand %vm66_vm14, %vm72_vm15  ;;  %v90_v27 = vsel /*vm=*/%vm89_vm4, /*on_true_vy=*/2139095040, /*on_false_vx=*/%v144_v23  ;;  %vm60_vm14 = vcmp.eq.f32.partialorder %v169_v1, 0  ;;  %vm76_vm15 = vcmp.eq.f32.partialorder %v164_v0, 1065353216 }
+  0x10   :  { %v96_v29 = vsel /*vm=*/%vm73_vm7, /*on_true_vy=*/%v95_v21, /*on_false_vx=*/%v94_v16  ;;  %vm84_vm12 = vmand %vm77_vm8, %vm73_vm7  ;;  %v92_v33 = vsel /*vm=*/%vm91_vm9, /*on_true_vy=*/1065353216, /*on_false_vx=*/%v90_v27  ;;  %v35_v36 = vsel /*vm=*/%vm22_vm13, /*on_true_vy=*/%v169_v1, /*on_false_vx=*/%v34_v31  ;;  %vm61_vm4 = vcmp.eq.f32.partialorder %v169_v1, 1065353216 }
+  0x11   :  { %112 = vpow2.f32 %v56_v10  ;;  %v97_v34 = vsel /*vm=*/%vm74_vm11, /*on_true_vy=*/%v96_v29, /*on_false_vx=*/%v94_v16  ;;  %vm103_vm3 = vmor %vm76_vm15, %vm60_vm14 }
+  0x12   :  { %v113_v26 = vpop.eup %112 }
+  0x13   :  { %v81_v28 = vsel /*vm=*/%vm220_vm1, /*on_true_vy=*/2143289344, /*on_false_vx=*/%v113_v26  ;;  %vm79_vm1 = vcmp.eq.f32.partialorder %v172_v2, 2139095040 }
+  0x14   :  { %v83_v30 = vsel /*vm=*/%vm75_vm6, /*on_true_vy=*/%v82_v24, /*on_false_vx=*/%v81_v28  ;;  %vm101_vm6 = vmor %vm99_vm10, %vm100_vm5 }
+  0x15   :  { %v85_v32 = vxor.u32 2147483648, %v83_v30  ;;  %v36_v40 = vsel /*vm=*/%vm101_vm6, /*on_true_vy=*/2143289344, /*on_false_vx=*/%v35_v36 }
+  0x16   :  { %v86_v35 = vsel /*vm=*/%vm84_vm12, /*on_true_vy=*/%v85_v32, /*on_false_vx=*/%v83_v30 }
+  0x17   :  { %v93_v37 = vsel /*vm=*/%vm59_vm0, /*on_true_vy=*/%v92_v33, /*on_false_vx=*/%v86_v35 }
+  0x18   :  { %v98_v38 = vsel /*vm=*/%vm79_vm1, /*on_true_vy=*/%v97_v34, /*on_false_vx=*/%v93_v37 }
+  0x19   :  { %v102_v39 = vsel /*vm=*/%vm101_vm6, /*on_true_vy=*/2143289344, /*on_false_vx=*/%v98_v38 }
+  0x1a   :  { %v104_v41 = vsel /*vm=*/%vm103_vm3, /*on_true_vy=*/1065353216, /*on_false_vx=*/%v102_v39 }
+  0x1b   :  { %v105_v42 = vsel /*vm=*/%vm61_vm4, /*on_true_vy=*/%v164_v0, /*on_false_vx=*/%v104_v41 }
+  0x1c   :  { %v38_v43 = vadd.f32 %v105_v42, %v36_v40 }
+  0x1d   :  { %39 = vst [vmem:[#allocation2] sm:$0xff] /*vst_source=*/%v38_v43 }
+  0x1e   :  { %127 = shalt.err (!%p122_p4) /* BoundsCheck 3 [deref of %s47] for %49 = dma.vmem_to_hbm [thread:$0]  /*vmem=*/%s47, /*size_in_granules=*/128, /*hbm=*/%s2, /*dst_syncflagno=*/[#allocation3] /* 
+base_bounds: (1, 1)
+dynamic_base_bounds: (1, 1)
+window_bounds: (1, 1)
+iteration_bounds: (1)
+strides: (1, 1)
+pad_low: (0, 0)
+pad_high: (0, 0)
+element_size_in_bytes: 4096
+second_minor_factor: 1 */
+hlo: non_mxu_pow_nextafter.1
+ */ }
+  0x1f   :  { %s128_s16 = scalar_lea.hbm %s270_s2, 128 }
+  0x20   :  { %p129_p5 = scmp.ne.s32.totalorder %s270_s2, %s128_s16  ;;  %p132_p6 = scmp.lt.u32.totalorder %s128_s16, %s270_s2 }
+  0x21   :  { %p134_p7 = pnand %p132_p6, %p129_p5 }
+  0x22   :  { %139 = shalt.err (!%p134_p7) /* BoundsCheck 3 [deref of %s2] for %49 = dma.vmem_to_hbm [thread:$0]  /*vmem=*/%s47, /*size_in_granules=*/128, /*hbm=*/%s2, /*dst_syncflagno=*/[#allocation3] /* 
+base_bounds: (1, 1)
+dynamic_base_bounds: (1, 1)
+window_bounds: (1, 1)
+iteration_bounds: (1)
+strides: (1, 1)
+pad_low: (0, 0)
+pad_high: (0, 0)
+element_size_in_bytes: 4096
+second_minor_factor: 1 */
+hlo: non_mxu_pow_nextafter.1
+ */ }
+  0x23   :  { %49 = dma.vmem_to_hbm [thread:$0]  /*vmem=*/%s47_s1, /*size_in_granules=*/128, /*hbm=*/%s270_s2, /*dst_syncflagno=*/[#allocation3] /* 
+base_bounds: (1, 1)
+dynamic_base_bounds: (1, 1)
+window_bounds: (1, 1)
+iteration_bounds: (1)
+strides: (1, 1)
+pad_low: (0, 0)
+pad_high: (0, 0)
+element_size_in_bytes: 4096
+second_minor_factor: 1 */ }
+  0x24   :  { %140 = dma.done.wait [#allocation3], 128 /* pipeline-emitter-dma-wait */ }
+  0x25   :  { %141 = vsyncadd [#allocation3], 4294967168 }
+  0x26   :  { %53 = vsyncpa [#allocation3], 1 } /* exit bundle: %non_mxu_pow_nextafter.1 = custom-call(%copy-done, %copy-done.1) */

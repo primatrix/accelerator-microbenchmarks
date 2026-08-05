@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "case_id": "reduce_s32",
+  "case": {
+    "case_id": "reduce_s32",
+    "family": "xlu_reduce",
+    "primitives": [
+      "lax.reduce_sum",
+      "lax.reduce_min",
+      "lax.reduce_max"
+    ],
+    "input_kinds": [
+      "s32"
+    ],
+    "output_dtype": "int32",
+    "shape": [
+      8,
+      128
+    ],
+    "output_shape": [
+      8,
+      128
+    ],
+    "mode": "vector",
+    "verify": true
+  },
+  "status": "succeeded",
+  "final_bundle": {
+    "path": "cases/reduce_s32/compiler/llo/final_bundle.llo",
+    "sha256": "1e24a534424c1d8630fd5ab0f56a0be35e2d472179fbd6eabe5c8189e80772a2"
+  }
+}

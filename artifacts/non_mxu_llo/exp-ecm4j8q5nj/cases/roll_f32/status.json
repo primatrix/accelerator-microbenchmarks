@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "case_id": "roll_f32",
+  "case": {
+    "case_id": "roll_f32",
+    "family": "xlu",
+    "primitives": [
+      "pltpu.roll"
+    ],
+    "input_kinds": [
+      "f32_signed"
+    ],
+    "output_dtype": "float32",
+    "shape": [
+      8,
+      128
+    ],
+    "output_shape": [
+      8,
+      128
+    ],
+    "mode": "vector",
+    "verify": false
+  },
+  "status": "succeeded",
+  "final_bundle": {
+    "path": "cases/roll_f32/compiler/llo/final_bundle.llo",
+    "sha256": "bf8cb831e67e464d0d18816b6bc0a1142d81417ac1fe14404b1d782cda5d499a"
+  }
+}

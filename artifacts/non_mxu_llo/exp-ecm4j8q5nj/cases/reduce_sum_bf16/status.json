@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "case_id": "reduce_sum_bf16",
+  "case": {
+    "case_id": "reduce_sum_bf16",
+    "family": "xlu_reduce",
+    "primitives": [
+      "lax.reduce_sum"
+    ],
+    "input_kinds": [
+      "bf16_signed"
+    ],
+    "output_dtype": "bfloat16",
+    "shape": [
+      8,
+      128
+    ],
+    "output_shape": [
+      8,
+      128
+    ],
+    "mode": "vector",
+    "verify": true
+  },
+  "status": "succeeded",
+  "final_bundle": {
+    "path": "cases/reduce_sum_bf16/compiler/llo/final_bundle.llo",
+    "sha256": "91094373e8d384858c7b2e7c72f50e61d6b9d8c25b4edacd80e29d856e99e0be"
+  }
+}

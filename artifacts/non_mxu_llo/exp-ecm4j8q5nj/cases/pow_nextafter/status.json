@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "case_id": "pow_nextafter",
+  "case": {
+    "case_id": "pow_nextafter",
+    "family": "vpu_eup",
+    "primitives": [
+      "lax.pow",
+      "lax.nextafter"
+    ],
+    "input_kinds": [
+      "f32_positive",
+      "f32_divisor"
+    ],
+    "output_dtype": "float32",
+    "shape": [
+      8,
+      128
+    ],
+    "output_shape": [
+      8,
+      128
+    ],
+    "mode": "vector",
+    "verify": true
+  },
+  "status": "succeeded",
+  "final_bundle": {
+    "path": "cases/pow_nextafter/compiler/llo/final_bundle.llo",
+    "sha256": "444c346135c8a5ff629bb8896a44c563199a46b1fddf0eb12768ef08c9f350cd"
+  }
+}

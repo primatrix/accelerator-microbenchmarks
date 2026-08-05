@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "case_id": "reduce_sum_f32",
+  "case": {
+    "case_id": "reduce_sum_f32",
+    "family": "xlu_reduce",
+    "primitives": [
+      "lax.reduce_sum"
+    ],
+    "input_kinds": [
+      "f32_signed"
+    ],
+    "output_dtype": "float32",
+    "shape": [
+      8,
+      128
+    ],
+    "output_shape": [
+      8,
+      128
+    ],
+    "mode": "vector",
+    "verify": true
+  },
+  "status": "succeeded",
+  "final_bundle": {
+    "path": "cases/reduce_sum_f32/compiler/llo/final_bundle.llo",
+    "sha256": "f9e1b495b0a1b96e8a51efdcd59bdf7cdc38db407484b23c8dc3586d1b5e619c"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "case": {
+    "case_id": "iota_f32",
+    "family": "vpu",
+    "input_kinds": [
+      "f32_signed"
+    ],
+    "mode": "vector",
+    "output_dtype": "float32",
+    "output_shape": [
+      8,
+      128
+    ],
+    "primitives": [
+      "lax.iota"
+    ],
+    "shape": [
+      8,
+      128
+    ],
+    "verify": true
+  },
+  "correctness": {
+    "checked": true,
+    "max_abs_error": 0.0,
+    "passed": true
+  },
+  "elapsed_ms_compile_and_run": 92.39022600013413,
+  "environment": {
+    "devices": [
+      "TPU_0(process=0,(0,0,0,0))",
+      "TPU_1(process=0,(0,0,0,1))",
+      "TPU_2(process=0,(1,0,0,0))",
+      "TPU_3(process=0,(1,0,0,1))",
+      "TPU_4(process=0,(0,1,0,0))",
+      "TPU_5(process=0,(0,1,0,1))",
+      "TPU_6(process=0,(1,1,0,0))",
+      "TPU_7(process=0,(1,1,0,1))"
+    ],
+    "jax": "0.10.2",
+    "jaxlib": "0.10.2",
+    "libtpu": "0.0.42.1",
+    "python": "3.12.12"
+  },
+  "kernel_name": "non_mxu_iota_f32",
+  "result": {
+    "dtype": "float32",
+    "sample": [
+      -4.0,
+      -2.96875,
+      -1.9375,
+      -0.90625,
+      0.125,
+      1.15625,
+      2.1875,
+      3.21875
+    ],
+    "sha256": "4492255be9055448c257aa494e73047c3566598e79767949234639197fd34f7d",
+    "shape": [
+      8,
+      128
+    ]
+  },
+  "schema_version": 1
+}
+

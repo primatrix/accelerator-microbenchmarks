@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "case_id": "div_s32",
+  "case": {
+    "case_id": "div_s32",
+    "family": "spu_vpu",
+    "primitives": [
+      "lax.div"
+    ],
+    "input_kinds": [
+      "s32",
+      "s32_divisor"
+    ],
+    "output_dtype": "int32",
+    "shape": [
+      8,
+      128
+    ],
+    "output_shape": [
+      8,
+      128
+    ],
+    "mode": "vector",
+    "verify": true
+  },
+  "status": "succeeded",
+  "final_bundle": {
+    "path": "cases/div_s32/compiler/llo/final_bundle.llo",
+    "sha256": "62a4087c7847b1f2eaf22e8318e9bdad7cf3f4f2005fc73fc44a02c646fd6aac"
+  }
+}

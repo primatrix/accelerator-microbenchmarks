@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "case_id": "pack_f32_bf16",
+  "case": {
+    "case_id": "pack_f32_bf16",
+    "family": "pack",
+    "primitives": [
+      "pltpu.pack_elementwise"
+    ],
+    "input_kinds": [
+      "f32_signed",
+      "f32_other"
+    ],
+    "output_dtype": "uint32",
+    "shape": [
+      8,
+      128
+    ],
+    "output_shape": [
+      8,
+      128
+    ],
+    "mode": "vector",
+    "verify": false
+  },
+  "status": "succeeded",
+  "final_bundle": {
+    "path": "cases/pack_f32_bf16/compiler/llo/final_bundle.llo",
+    "sha256": "10847f7e443eebfe4623c4004cc0d2498b7b693152c141bfd9c1735e7c4556d5"
+  }
+}

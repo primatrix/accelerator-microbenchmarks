@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "case_id": "bitwise_u32",
+  "case": {
+    "case_id": "bitwise_u32",
+    "family": "vpu",
+    "primitives": [
+      "lax.and",
+      "lax.or",
+      "lax.xor"
+    ],
+    "input_kinds": [
+      "u32",
+      "u32_other"
+    ],
+    "output_dtype": "uint32",
+    "shape": [
+      8,
+      128
+    ],
+    "output_shape": [
+      8,
+      128
+    ],
+    "mode": "vector",
+    "verify": true
+  },
+  "status": "succeeded",
+  "final_bundle": {
+    "path": "cases/bitwise_u32/compiler/llo/final_bundle.llo",
+    "sha256": "4c98364d696f7b719bfec664c5410408760ae7bf27970dd85328e5187c624b16"
+  }
+}

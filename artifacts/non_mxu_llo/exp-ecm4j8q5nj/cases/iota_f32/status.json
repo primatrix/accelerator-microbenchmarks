@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "case_id": "iota_f32",
+  "case": {
+    "case_id": "iota_f32",
+    "family": "vpu",
+    "primitives": [
+      "lax.iota"
+    ],
+    "input_kinds": [
+      "f32_signed"
+    ],
+    "output_dtype": "float32",
+    "shape": [
+      8,
+      128
+    ],
+    "output_shape": [
+      8,
+      128
+    ],
+    "mode": "vector",
+    "verify": true
+  },
+  "status": "succeeded",
+  "final_bundle": {
+    "path": "cases/iota_f32/compiler/llo/final_bundle.llo"
+  }
+}

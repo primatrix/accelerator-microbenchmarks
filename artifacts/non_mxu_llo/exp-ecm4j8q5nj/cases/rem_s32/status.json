@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "case_id": "rem_s32",
+  "case": {
+    "case_id": "rem_s32",
+    "family": "spu_vpu",
+    "primitives": [
+      "lax.rem"
+    ],
+    "input_kinds": [
+      "s32",
+      "s32_divisor"
+    ],
+    "output_dtype": "int32",
+    "shape": [
+      8,
+      128
+    ],
+    "output_shape": [
+      8,
+      128
+    ],
+    "mode": "vector",
+    "verify": true
+  },
+  "status": "succeeded",
+  "final_bundle": {
+    "path": "cases/rem_s32/compiler/llo/final_bundle.llo",
+    "sha256": "0f895da182ceaacd93be3ab9ed54a90ddf8216be772942fa2aeefc347bdd545f"
+  }
+}

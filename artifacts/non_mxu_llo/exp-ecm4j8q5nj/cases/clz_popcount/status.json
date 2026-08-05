@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "case_id": "clz_popcount",
+  "case": {
+    "case_id": "clz_popcount",
+    "family": "vpu",
+    "primitives": [
+      "lax.clz",
+      "lax.population_count"
+    ],
+    "input_kinds": [
+      "u32"
+    ],
+    "output_dtype": "uint32",
+    "shape": [
+      8,
+      128
+    ],
+    "output_shape": [
+      8,
+      128
+    ],
+    "mode": "vector",
+    "verify": true
+  },
+  "status": "succeeded",
+  "final_bundle": {
+    "path": "cases/clz_popcount/compiler/llo/final_bundle.llo",
+    "sha256": "98bb8671523713a5cb1d8f0d715f7d7950eb3c9aaa5d352dda0bc9750f447903"
+  }
+}

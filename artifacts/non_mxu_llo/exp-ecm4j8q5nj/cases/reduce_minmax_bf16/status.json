@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "case_id": "reduce_minmax_bf16",
+  "case": {
+    "case_id": "reduce_minmax_bf16",
+    "family": "xlu_reduce",
+    "primitives": [
+      "lax.reduce_min",
+      "lax.reduce_max"
+    ],
+    "input_kinds": [
+      "bf16_signed"
+    ],
+    "output_dtype": "bfloat16",
+    "shape": [
+      8,
+      128
+    ],
+    "output_shape": [
+      8,
+      128
+    ],
+    "mode": "vector",
+    "verify": true
+  },
+  "status": "succeeded",
+  "final_bundle": {
+    "path": "cases/reduce_minmax_bf16/compiler/llo/final_bundle.llo",
+    "sha256": "ed7aa576c5ea5eb2183951237ee4282e23f44e99d983dfe3f7167e7d50b2ba2e"
+  }
+}

@@ -346,6 +346,9 @@ def _write_matrix(path: Path, cases: list[dict[str, Any]]) -> None:
         "vmatprep_subr",
         "vmatprep_subr_mxu0",
         "vmatprep_subr_mxu1",
+        "vmatpush1",
+        "vmatpush3",
+        "vmatprep_mubr",
         "vmatmul",
         "vmatmul_mxu0",
         "vmatmul_mxu1",
@@ -386,6 +389,13 @@ def _write_matrix(path: Path, cases: list[dict[str, Any]]) -> None:
                     "vmatprep_subr_mxu1": case["mxu"][
                         "vmatprep_subr_by_mxu"
                     ].get("mxu1", 0),
+                    "vmatpush1": case["mxu"][
+                        "vmatpush_variants"
+                    ].get("1", 0),
+                    "vmatpush3": case["mxu"][
+                        "vmatpush_variants"
+                    ].get("3", 0),
+                    "vmatprep_mubr": case["mxu"]["vmatprep_mubr"],
                     "vmatmul": case["mxu"]["vmatmul"],
                     "vmatmul_mxu0": case["mxu"]["vmatmul_by_mxu"].get(
                         "mxu0", 0
@@ -452,6 +462,7 @@ def _case_row(case: dict[str, Any]) -> str:
         f"{mrb_stats.get('mxu1', {}).get('wrap_to_zero', 0)}"
     )
     prep_by_mxu = mxu["vmatprep_subr_by_mxu"]
+    push_variants = mxu["vmatpush_variants"]
     matmul_by_mxu = mxu["vmatmul_by_mxu"]
     prep_count = (
         f"{prep_by_mxu.get('mxu0', 0)}/"
@@ -468,6 +479,9 @@ def _case_row(case: dict[str, Any]) -> str:
         f"{decomposition['n_panels_256']} "
         f"| {decomposition['parallel_axis']} "
         f"| {mxu['vmatprep_subr']} ({prep_count}) "
+        f"| {push_variants.get('1', 0)} "
+        f"| {push_variants.get('3', 0)} "
+        f"| {mxu['vmatprep_mubr']} "
         f"| {mxu['vmatmul']} ({matmul_count}) "
         f"| {mxu['vpop']} ({pop_count}) "
         f"| {vector_path['vadd_f32']} "
@@ -551,11 +565,11 @@ def _write_report(path: Path, cases: list[dict[str, Any]]) -> None:
         "## 各 shape 的直接统计\n",
         "\n",
         "| Case | M×K×N panel | 双 MXU 轴 | vmatprep.subr（mxu0/1） "
-        "| vmatmul（mxu0/1） "
+        "| vmatpush1 | vmatpush3 | vmatprep.mubr | vmatmul（mxu0/1） "
         "| vpop（mxu0/1） | vadd "
         "| masked matmul/mask ops | MRB 地址跨度 mxu0/1 "
         "| MRB 峰值 live mxu0/1 | 回绕到 0 mxu0/1 | bundles |\n",
-        "|---|---:|:---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|\n",
+        "|---|---:|:---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|\n",
     ]
     lines.extend(_case_row(case) for case in cases)
     large_case_ids = {

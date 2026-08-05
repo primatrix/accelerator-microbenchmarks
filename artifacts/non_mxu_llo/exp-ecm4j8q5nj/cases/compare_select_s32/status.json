@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "case_id": "compare_select_s32",
+  "case": {
+    "case_id": "compare_select_s32",
+    "family": "predicate_vpu",
+    "primitives": [
+      "lax.eq",
+      "lax.ne",
+      "lax.lt",
+      "lax.le",
+      "lax.gt",
+      "lax.ge",
+      "lax.select_n"
+    ],
+    "input_kinds": [
+      "s32",
+      "s32_other"
+    ],
+    "output_dtype": "int32",
+    "shape": [
+      8,
+      128
+    ],
+    "output_shape": [
+      8,
+      128
+    ],
+    "mode": "vector",
+    "verify": true
+  },
+  "status": "succeeded",
+  "final_bundle": {
+    "path": "cases/compare_select_s32/compiler/llo/final_bundle.llo",
+    "sha256": "adc8ff3e0718a4c37677e8276b05e17f207baa7ee15e7f5a9d87fdfdaa40fd0f"
+  }
+}

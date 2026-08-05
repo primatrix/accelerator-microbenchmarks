@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "case_id": "reduce_minmax_f32",
+  "case": {
+    "case_id": "reduce_minmax_f32",
+    "family": "xlu_reduce",
+    "primitives": [
+      "lax.reduce_min",
+      "lax.reduce_max"
+    ],
+    "input_kinds": [
+      "f32_signed"
+    ],
+    "output_dtype": "float32",
+    "shape": [
+      8,
+      128
+    ],
+    "output_shape": [
+      8,
+      128
+    ],
+    "mode": "vector",
+    "verify": true
+  },
+  "status": "succeeded",
+  "final_bundle": {
+    "path": "cases/reduce_minmax_f32/compiler/llo/final_bundle.llo",
+    "sha256": "bf189778d68a0b2f09c6138a1167f27d343691c90f7e7cfddbc9648f183e199c"
+  }
+}

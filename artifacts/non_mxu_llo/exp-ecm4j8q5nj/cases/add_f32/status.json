@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "case_id": "add_f32",
+  "case": {
+    "case_id": "add_f32",
+    "family": "vpu",
+    "primitives": [
+      "lax.add"
+    ],
+    "input_kinds": [
+      "f32_signed",
+      "f32_other"
+    ],
+    "output_dtype": "float32",
+    "shape": [
+      8,
+      128
+    ],
+    "output_shape": [
+      8,
+      128
+    ],
+    "mode": "vector",
+    "verify": true
+  },
+  "status": "succeeded",
+  "final_bundle": {
+    "path": "cases/add_f32/compiler/llo/final_bundle.llo",
+    "sha256": "d991fdba558c3648751058f28c3853061abfdcdc2955d42c8fb6ab1807fd0c23"
+  }
+}

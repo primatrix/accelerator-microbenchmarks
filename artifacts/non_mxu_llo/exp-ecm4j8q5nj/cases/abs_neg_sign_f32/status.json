@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "case_id": "abs_neg_sign_f32",
+  "case": {
+    "case_id": "abs_neg_sign_f32",
+    "family": "vpu",
+    "primitives": [
+      "lax.abs",
+      "lax.neg",
+      "lax.sign"
+    ],
+    "input_kinds": [
+      "f32_signed"
+    ],
+    "output_dtype": "float32",
+    "shape": [
+      8,
+      128
+    ],
+    "output_shape": [
+      8,
+      128
+    ],
+    "mode": "vector",
+    "verify": true
+  },
+  "status": "succeeded",
+  "final_bundle": {
+    "path": "cases/abs_neg_sign_f32/compiler/llo/final_bundle.llo",
+    "sha256": "2bd0b81f4e0542ae034b7f49cc8a7839f86b5b12316ad53859f8ea032d527829"
+  }
+}

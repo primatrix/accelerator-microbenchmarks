@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "case_id": "bitcast_f32_u32",
+  "case": {
+    "case_id": "bitcast_f32_u32",
+    "family": "convert",
+    "primitives": [
+      "lax.bitcast_convert_type"
+    ],
+    "input_kinds": [
+      "f32_signed"
+    ],
+    "output_dtype": "uint32",
+    "shape": [
+      8,
+      128
+    ],
+    "output_shape": [
+      8,
+      128
+    ],
+    "mode": "vector",
+    "verify": true
+  },
+  "status": "succeeded",
+  "final_bundle": {
+    "path": "cases/bitcast_f32_u32/compiler/llo/final_bundle.llo",
+    "sha256": "8c9232c8dd0d064971a879c714214e89cb0001c806a702c467ba5d7a82fc90cd"
+  }
+}

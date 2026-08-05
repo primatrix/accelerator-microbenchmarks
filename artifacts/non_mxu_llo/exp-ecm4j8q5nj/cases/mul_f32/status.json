@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "case_id": "mul_f32",
+  "case": {
+    "case_id": "mul_f32",
+    "family": "vpu",
+    "primitives": [
+      "lax.mul"
+    ],
+    "input_kinds": [
+      "f32_signed",
+      "f32_other"
+    ],
+    "output_dtype": "float32",
+    "shape": [
+      8,
+      128
+    ],
+    "output_shape": [
+      8,
+      128
+    ],
+    "mode": "vector",
+    "verify": true
+  },
+  "status": "succeeded",
+  "final_bundle": {
+    "path": "cases/mul_f32/compiler/llo/final_bundle.llo",
+    "sha256": "8371db9bd98c5f8d20659e6d48826cc83486da2c8b9e286790d0cd254c60d444"
+  }
+}

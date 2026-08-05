@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "case_id": "scalar_arith",
+  "case": {
+    "case_id": "scalar_arith",
+    "family": "spu",
+    "primitives": [
+      "pl.program_id",
+      "lax.add",
+      "lax.sub",
+      "lax.mul",
+      "lax.div",
+      "lax.rem",
+      "lax.min",
+      "lax.max"
+    ],
+    "input_kinds": [
+      "f32_signed"
+    ],
+    "output_dtype": "float32",
+    "shape": [
+      32,
+      128
+    ],
+    "output_shape": [
+      32,
+      128
+    ],
+    "mode": "scalar_grid",
+    "verify": true
+  },
+  "status": "succeeded",
+  "final_bundle": {
+    "path": "cases/scalar_arith/compiler/llo/final_bundle.llo",
+    "sha256": "29bc0a67ea9182de6a379518812fc4d52c2793baec47726667ba95b20317d749"
+  }
+}

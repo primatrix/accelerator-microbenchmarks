@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "case_id": "shifts",
+  "case": {
+    "case_id": "shifts",
+    "family": "vpu",
+    "primitives": [
+      "lax.shift_left",
+      "lax.shift_right_logical",
+      "lax.shift_right_arithmetic"
+    ],
+    "input_kinds": [
+      "u32",
+      "shift"
+    ],
+    "output_dtype": "uint32",
+    "shape": [
+      8,
+      128
+    ],
+    "output_shape": [
+      8,
+      128
+    ],
+    "mode": "vector",
+    "verify": true
+  },
+  "status": "succeeded",
+  "final_bundle": {
+    "path": "cases/shifts/compiler/llo/final_bundle.llo",
+    "sha256": "265eab48e74edb05cee4c81030515530b2e7ab61d4b006cf8a29144b8b6d5e1d"
+  }
+}

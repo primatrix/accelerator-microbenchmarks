@@ -1,0 +1,64 @@
+= control target key start
+LH: loop header
+LB: loop body
+LE: loop exit
+PB: predicated region body
+PF: predicated region fallthrough
+CT: control target
+= control target key end
+
+     0   :  { %vm13_vm0 = vcmask 1043456 /* [0:3,0:127] */  ;;  %s97_s0 = inlined_call_operand.vmem [shape: bf16[8,128], index: 0, kind: input, shape index: {}] /* input window allocation for operator input 0. The window shape is bf16[8,128], while the full shape is bf16[8,128]. The u8 shape/size shown above represents the raw byte size of this window in VMEM.  */  ;;  %s98_s1 = inlined_call_operand.hbm [shape: bf16[8,128], index: 1, kind: output, shape index: {}] /* output window allocation for operator output 0. The window shape is bf16[8,128], while the full shape is bf16[8,128]. The u8 shape/size shown above represents the raw byte size of this window in VMEM.  */ } /* entry bundle: %non_mxu_reduce_minmax_bf16.1 = custom-call(%copy-done) */
+   0x1   :  { %v12_v0 = vld [vmem:[%s97_s0] sm:$0xf] }
+   0x2   :  { %6 = vsyncpa [#allocation3], 0  ;;  %v21_v1 = vsel /*vm=*/%vm13_vm0, /*on_true_vy=*/%v12_v0, /*on_false_vx=*/4286644096  ;;  %v16_v2 = vsel /*vm=*/%vm13_vm0, /*on_true_vy=*/%v12_v0, /*on_false_vx=*/2139127680 }
+   0x3   :  { %23 = vmax.xlane.bf16.xlu0 %v21_v1  ;;  %s71_s8 = smov [#allocation2] /* materialized constant */ }
+   0x4   :  { %s34_s9 = sshll.u32 %s71_s8, 4  ;;  %s35_s9 = int_to_ptr.vmem [resolvable:$true] %s34_s9 }
+   0x5   :  { %s43_s10 = scalar_lea.vmem %s35_s9, 64  ;;  %p48_p1 = scmp.lt.s32.totalorder %s35_s9, %s35_s9 }
+   0x6   :  { %p44_p0 = scmp.ne.s32.totalorder %s35_s9, %s43_s10  ;;  %p49_p2 = scmp.lt.s32.totalorder %s43_s10, %s43_s10 }
+   0x7   :  { %p50_p3 = por %p49_p2, %p48_p1 }
+   0x8   :  { %p51_p4 = pnand %p50_p3, %p44_p0 }
+   0x9   :  { %18 = vmin.xlane.bf16.xlu0 %v16_v2 }
+   0xa   :  { %v24_v3 = vpop.xlane.xlu0 %23 }
+   0xb   :  { %v25_v4 = vmul.bf16 1077952576, %v24_v3 }
+   0xc   :  { %v19_v5 = vpop.xlane.xlu0 %18 }
+   0xd   :  { %v26_v6 = vadd.bf16 %v25_v4, %v19_v5 }
+   0xe   :  { %27 = vst [vmem:[#allocation2] sm:$0xf] /*vst_source=*/%v26_v6 }
+   0xf   :  { %56 = shalt.err (!%p51_p4) /* BoundsCheck 2 [deref of %s35] for %37 = dma.vmem_to_hbm [thread:$0]  /*vmem=*/%s35, /*size_in_granules=*/64, /*hbm=*/%s1, /*dst_syncflagno=*/[#allocation3] /* 
+base_bounds: (1, 1)
+dynamic_base_bounds: (1, 1)
+window_bounds: (1, 1)
+iteration_bounds: (1)
+strides: (1, 1)
+pad_low: (0, 0)
+pad_high: (0, 0)
+element_size_in_bytes: 2048
+second_minor_factor: 1 */
+hlo: non_mxu_reduce_minmax_bf16.1
+ */ }
+  0x10   :  { %s57_s12 = scalar_lea.hbm %s98_s1, 64 }
+  0x11   :  { %p58_p5 = scmp.ne.s32.totalorder %s98_s1, %s57_s12  ;;  %p61_p6 = scmp.lt.u32.totalorder %s57_s12, %s98_s1 }
+  0x12   :  { %p63_p7 = pnand %p61_p6, %p58_p5 }
+  0x13   :  { %68 = shalt.err (!%p63_p7) /* BoundsCheck 2 [deref of %s1] for %37 = dma.vmem_to_hbm [thread:$0]  /*vmem=*/%s35, /*size_in_granules=*/64, /*hbm=*/%s1, /*dst_syncflagno=*/[#allocation3] /* 
+base_bounds: (1, 1)
+dynamic_base_bounds: (1, 1)
+window_bounds: (1, 1)
+iteration_bounds: (1)
+strides: (1, 1)
+pad_low: (0, 0)
+pad_high: (0, 0)
+element_size_in_bytes: 2048
+second_minor_factor: 1 */
+hlo: non_mxu_reduce_minmax_bf16.1
+ */ }
+  0x14   :  { %37 = dma.vmem_to_hbm [thread:$0]  /*vmem=*/%s35_s9, /*size_in_granules=*/64, /*hbm=*/%s98_s1, /*dst_syncflagno=*/[#allocation3] /* 
+base_bounds: (1, 1)
+dynamic_base_bounds: (1, 1)
+window_bounds: (1, 1)
+iteration_bounds: (1)
+strides: (1, 1)
+pad_low: (0, 0)
+pad_high: (0, 0)
+element_size_in_bytes: 2048
+second_minor_factor: 1 */ }
+  0x15   :  { %69 = dma.done.wait [#allocation3], 64 /* pipeline-emitter-dma-wait */ }
+  0x16   :  { %70 = vsyncadd [#allocation3], 4294967232 }
+  0x17   :  { %41 = vsyncpa [#allocation3], 1 } /* exit bundle: %non_mxu_reduce_minmax_bf16.1 = custom-call(%copy-done) */

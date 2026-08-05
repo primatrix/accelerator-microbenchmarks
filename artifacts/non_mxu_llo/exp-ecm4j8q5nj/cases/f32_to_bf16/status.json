@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "case_id": "f32_to_bf16",
+  "case": {
+    "case_id": "f32_to_bf16",
+    "family": "convert",
+    "primitives": [
+      "lax.convert_element_type"
+    ],
+    "input_kinds": [
+      "f32_signed"
+    ],
+    "output_dtype": "bfloat16",
+    "shape": [
+      8,
+      128
+    ],
+    "output_shape": [
+      8,
+      128
+    ],
+    "mode": "vector",
+    "verify": true
+  },
+  "status": "succeeded",
+  "final_bundle": {
+    "path": "cases/f32_to_bf16/compiler/llo/final_bundle.llo",
+    "sha256": "a17c9f4aadb141db719ede27e47557cda21ebd42df26740ebcac13100a1129ca"
+  }
+}

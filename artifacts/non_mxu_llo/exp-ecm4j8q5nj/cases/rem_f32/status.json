@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "case_id": "rem_f32",
+  "case": {
+    "case_id": "rem_f32",
+    "family": "vpu",
+    "primitives": [
+      "lax.rem"
+    ],
+    "input_kinds": [
+      "f32_positive",
+      "f32_divisor"
+    ],
+    "output_dtype": "float32",
+    "shape": [
+      8,
+      128
+    ],
+    "output_shape": [
+      8,
+      128
+    ],
+    "mode": "vector",
+    "verify": true
+  },
+  "status": "succeeded",
+  "final_bundle": {
+    "path": "cases/rem_f32/compiler/llo/final_bundle.llo",
+    "sha256": "426f40cb2be1aa5740c103ea1ae9a5b10dbf25abd21313713e2e5c61d6027c6f"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "case_id": "s32_to_f32",
+  "case": {
+    "case_id": "s32_to_f32",
+    "family": "convert",
+    "primitives": [
+      "lax.convert_element_type"
+    ],
+    "input_kinds": [
+      "s32"
+    ],
+    "output_dtype": "float32",
+    "shape": [
+      8,
+      128
+    ],
+    "output_shape": [
+      8,
+      128
+    ],
+    "mode": "vector",
+    "verify": true
+  },
+  "status": "succeeded",
+  "final_bundle": {
+    "path": "cases/s32_to_f32/compiler/llo/final_bundle.llo",
+    "sha256": "20f8769007087a18e7eeff1681e942938e4a2f242cb93573c8e9a63519810ef9"
+  }
+}

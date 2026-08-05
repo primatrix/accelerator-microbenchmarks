@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "case_id": "argminmax_f32",
+  "case": {
+    "case_id": "argminmax_f32",
+    "family": "xlu_reduce",
+    "primitives": [
+      "lax.argmin",
+      "lax.argmax"
+    ],
+    "input_kinds": [
+      "f32_signed"
+    ],
+    "output_dtype": "int32",
+    "shape": [
+      8,
+      128
+    ],
+    "output_shape": [
+      8,
+      128
+    ],
+    "mode": "vector",
+    "verify": true
+  },
+  "status": "succeeded",
+  "final_bundle": {
+    "path": "cases/argminmax_f32/compiler/llo/final_bundle.llo",
+    "sha256": "af05b099a2453e63d2e9f309f130897b168836f2536b70545ec274ba0c68bcf2"
+  }
+}

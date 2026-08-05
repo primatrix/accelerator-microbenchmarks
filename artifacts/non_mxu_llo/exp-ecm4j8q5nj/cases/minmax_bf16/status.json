@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "case_id": "minmax_bf16",
+  "case": {
+    "case_id": "minmax_bf16",
+    "family": "vpu",
+    "primitives": [
+      "lax.min",
+      "lax.max"
+    ],
+    "input_kinds": [
+      "bf16_signed",
+      "bf16_other"
+    ],
+    "output_dtype": "bfloat16",
+    "shape": [
+      8,
+      128
+    ],
+    "output_shape": [
+      8,
+      128
+    ],
+    "mode": "vector",
+    "verify": true
+  },
+  "status": "succeeded",
+  "final_bundle": {
+    "path": "cases/minmax_bf16/compiler/llo/final_bundle.llo",
+    "sha256": "78340b575a74ff36f1d8e8924a270e25a70aa5e6209da5defd8a0dbb45906351"
+  }
+}

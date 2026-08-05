@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "case_id": "log_log1p",
+  "case": {
+    "case_id": "log_log1p",
+    "family": "eup",
+    "primitives": [
+      "lax.log",
+      "lax.log1p"
+    ],
+    "input_kinds": [
+      "f32_positive"
+    ],
+    "output_dtype": "float32",
+    "shape": [
+      8,
+      128
+    ],
+    "output_shape": [
+      8,
+      128
+    ],
+    "mode": "vector",
+    "verify": true
+  },
+  "status": "succeeded",
+  "final_bundle": {
+    "path": "cases/log_log1p/compiler/llo/final_bundle.llo",
+    "sha256": "64e5dd8796a2e0171b723e5d15919f7eaa72a57e41154dd475375e0fbed355af"
+  }
+}

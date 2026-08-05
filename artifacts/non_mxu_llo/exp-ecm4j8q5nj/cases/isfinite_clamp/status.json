@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "case_id": "isfinite_clamp",
+  "case": {
+    "case_id": "isfinite_clamp",
+    "family": "predicate_vpu",
+    "primitives": [
+      "lax.is_finite",
+      "lax.clamp"
+    ],
+    "input_kinds": [
+      "f32_signed",
+      "f32_other"
+    ],
+    "output_dtype": "float32",
+    "shape": [
+      8,
+      128
+    ],
+    "output_shape": [
+      8,
+      128
+    ],
+    "mode": "vector",
+    "verify": true
+  },
+  "status": "succeeded",
+  "final_bundle": {
+    "path": "cases/isfinite_clamp/compiler/llo/final_bundle.llo",
+    "sha256": "dbf7aaf11c5d58fcece0ae0dab3e120057e00a2f2b27b60e6fda2c6245c2aaca"
+  }
+}

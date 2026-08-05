@@ -1,0 +1,57 @@
+= control target key start
+LH: loop header
+LB: loop body
+LE: loop exit
+PB: predicated region body
+PF: predicated region fallthrough
+CT: control target
+= control target key end
+
+     0   :  { %s81_s0 = inlined_call_operand.vmem [shape: f32[8,128], index: 0, kind: input, shape index: {}] /* input window allocation for operator input 0. The window shape is f32[8,128], while the full shape is f32[8,128]. The u8 shape/size shown above represents the raw byte size of this window in VMEM.  */  ;;  %s82_s1 = inlined_call_operand.hbm [shape: bf16[8,128], index: 1, kind: output, shape index: {}] /* output window allocation for operator output 0. The window shape is bf16[8,128], while the full shape is bf16[8,128]. The u8 shape/size shown above represents the raw byte size of this window in VMEM.  */ } /* entry bundle: %non_mxu_f32_to_bf16.1 = custom-call(%copy-done) */
+   0x1   :  { %v9_v0 = vld [vmem:[%s81_s0] sm:$0xff] }
+   0x2   :  { %6 = vsyncpa [#allocation3], 0  ;;  %v10_v1 = vpack.c.bf16 %v9_v0, %v9_v0  ;;  %s55_s8 = smov [#allocation2] /* materialized constant */ }
+   0x3   :  { %s18_s9 = sshll.u32 %s55_s8, 4  ;;  %s19_s9 = int_to_ptr.vmem [resolvable:$true] %s18_s9 }
+   0x4   :  { %11 = vst [vmem:[#allocation2] sm:$0xf] /*vst_source=*/%v10_v1  ;;  %s27_s10 = scalar_lea.vmem %s19_s9, 64  ;;  %p32_p1 = scmp.lt.s32.totalorder %s19_s9, %s19_s9 }
+   0x5   :  { %p28_p0 = scmp.ne.s32.totalorder %s19_s9, %s27_s10  ;;  %p33_p2 = scmp.lt.s32.totalorder %s27_s10, %s27_s10 }
+   0x6   :  { %p34_p3 = por %p33_p2, %p32_p1 }
+   0x7   :  { %p35_p4 = pnand %p34_p3, %p28_p0 }
+   0x8   :  { %40 = shalt.err (!%p35_p4) /* BoundsCheck 2 [deref of %s19] for %21 = dma.vmem_to_hbm [thread:$0]  /*vmem=*/%s19, /*size_in_granules=*/64, /*hbm=*/%s1, /*dst_syncflagno=*/[#allocation3] /* 
+base_bounds: (1, 1)
+dynamic_base_bounds: (1, 1)
+window_bounds: (1, 1)
+iteration_bounds: (1)
+strides: (1, 1)
+pad_low: (0, 0)
+pad_high: (0, 0)
+element_size_in_bytes: 2048
+second_minor_factor: 1 */
+hlo: non_mxu_f32_to_bf16.1
+ */ }
+   0x9   :  { %s41_s13 = scalar_lea.hbm %s82_s1, 64 }
+   0xa   :  { %p42_p5 = scmp.ne.s32.totalorder %s82_s1, %s41_s13  ;;  %p45_p6 = scmp.lt.u32.totalorder %s41_s13, %s82_s1 }
+   0xb   :  { %p47_p7 = pnand %p45_p6, %p42_p5 }
+   0xc   :  { %52 = shalt.err (!%p47_p7) /* BoundsCheck 2 [deref of %s1] for %21 = dma.vmem_to_hbm [thread:$0]  /*vmem=*/%s19, /*size_in_granules=*/64, /*hbm=*/%s1, /*dst_syncflagno=*/[#allocation3] /* 
+base_bounds: (1, 1)
+dynamic_base_bounds: (1, 1)
+window_bounds: (1, 1)
+iteration_bounds: (1)
+strides: (1, 1)
+pad_low: (0, 0)
+pad_high: (0, 0)
+element_size_in_bytes: 2048
+second_minor_factor: 1 */
+hlo: non_mxu_f32_to_bf16.1
+ */ }
+   0xd   :  { %21 = dma.vmem_to_hbm [thread:$0]  /*vmem=*/%s19_s9, /*size_in_granules=*/64, /*hbm=*/%s82_s1, /*dst_syncflagno=*/[#allocation3] /* 
+base_bounds: (1, 1)
+dynamic_base_bounds: (1, 1)
+window_bounds: (1, 1)
+iteration_bounds: (1)
+strides: (1, 1)
+pad_low: (0, 0)
+pad_high: (0, 0)
+element_size_in_bytes: 2048
+second_minor_factor: 1 */ }
+   0xe   :  { %53 = dma.done.wait [#allocation3], 64 /* pipeline-emitter-dma-wait */ }
+   0xf   :  { %54 = vsyncadd [#allocation3], 4294967232 }
+  0x10   :  { %25 = vsyncpa [#allocation3], 1 } /* exit bundle: %non_mxu_f32_to_bf16.1 = custom-call(%copy-done) */

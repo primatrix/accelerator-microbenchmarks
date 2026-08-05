@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "case_id": "stochastic_bf16",
+  "case": {
+    "case_id": "stochastic_bf16",
+    "family": "convert",
+    "primitives": [
+      "pltpu.stochastic_round"
+    ],
+    "input_kinds": [
+      "f32_signed",
+      "random_bits"
+    ],
+    "output_dtype": "bfloat16",
+    "shape": [
+      8,
+      128
+    ],
+    "output_shape": [
+      8,
+      128
+    ],
+    "mode": "vector",
+    "verify": false
+  },
+  "status": "succeeded",
+  "final_bundle": {
+    "path": "cases/stochastic_bf16/compiler/llo/final_bundle.llo",
+    "sha256": "bc7a55a9d2d7efee399280c40051f719afd66b40c9944dbd143d3c46a9e48c19"
+  }
+}

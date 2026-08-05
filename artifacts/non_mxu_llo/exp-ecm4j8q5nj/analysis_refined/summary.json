@@ -1,0 +1,2531 @@
+{
+  "all_opcode_counts": {
+    "dma.done.wait": 53,
+    "inlined_call_operand.hbm": 53,
+    "inlined_call_operand.vmem": 79,
+    "int_to_ptr.vmem": 55,
+    "pnand": 114,
+    "pneg": 4,
+    "por": 61,
+    "sadd.s32": 13,
+    "sand.u32": 5,
+    "sbr.rel": 4,
+    "scalar_lea.hbm": 57,
+    "scalar_lea.sflag": 4,
+    "scalar_lea.vmem": 59,
+    "scalar_select": 4,
+    "scmp.eq.s32.totalorder": 6,
+    "scmp.ge.s32.totalorder": 6,
+    "scmp.gt.s32.totalorder": 1,
+    "scmp.lt.s32.totalorder": 112,
+    "scmp.lt.u32.totalorder": 57,
+    "scmp.ne.s32.totalorder": 110,
+    "scvt.s32.f32": 2,
+    "sdivrem.u32": 1,
+    "smin.u32": 1,
+    "smov": 76,
+    "smul.u32": 2,
+    "smulhi.u32": 1,
+    "sor.u32": 1,
+    "sphi": 8,
+    "spop.drf": 1,
+    "sshll.u32": 62,
+    "sshrl.u32": 2,
+    "ssub.s32": 5,
+    "sxor.u32": 1,
+    "vadd.bf16": 3,
+    "vadd.f32": 38,
+    "vadd.s32": 152,
+    "vadd.xlane.f32.xlu0": 2,
+    "vadd.xlane.f32.xlu1": 2,
+    "vand.u32": 26,
+    "vc.u32": 1,
+    "vceil.f32": 1,
+    "vclamps-f32": 1,
+    "vclz": 2,
+    "vcmask": 1,
+    "vcmp.eq.f32.partialorder": 17,
+    "vcmp.eq.s32.totalorder": 7,
+    "vcmp.ge.f32.partialorder": 1,
+    "vcmp.ge.s32.totalorder": 1,
+    "vcmp.ge.u32.totalorder": 128,
+    "vcmp.gt.f32.partialorder": 3,
+    "vcmp.gt.s32.totalorder": 4,
+    "vcmp.gt.u32.totalorder": 1,
+    "vcmp.le.f32.partialorder": 2,
+    "vcmp.le.s32.totalorder": 1,
+    "vcmp.lt.f32.partialorder": 7,
+    "vcmp.lt.s32.totalorder": 15,
+    "vcmp.ne.f32.partialorder": 4,
+    "vcmp.ne.s32.totalorder": 2,
+    "vcosq.f32": 1,
+    "vcvt.f32.s32": 8,
+    "vcvt.s32.f32": 6,
+    "vcvt.sr.f32.bf16": 1,
+    "vfloor.f32": 2,
+    "vlaneseq": 1,
+    "vld": 94,
+    "vlog2.f32": 4,
+    "vmand": 6,
+    "vmax.bf16": 1,
+    "vmax.f32": 1,
+    "vmax.index.xlane.f32.xlu0": 1,
+    "vmax.xlane.bf16.xlu0": 1,
+    "vmax.xlane.f32.xlu0": 2,
+    "vmax.xlane.f32.xlu1": 1,
+    "vmin.bf16": 1,
+    "vmin.f32": 1,
+    "vmin.index.xlane.f32.xlu0": 1,
+    "vmin.u32": 6,
+    "vmin.xlane.bf16.xlu0": 1,
+    "vmin.xlane.f32.xlu0": 3,
+    "vmmov": 1,
+    "vmneg": 1,
+    "vmor": 5,
+    "vmov": 19,
+    "vmul.bf16": 3,
+    "vmul.f32": 37,
+    "vmul.u32": 10,
+    "vmul.u32.u64.high": 2,
+    "vmul.u32.u64.low": 2,
+    "vmxor": 3,
+    "vor.u32": 136,
+    "vpack.c.b16": 1,
+    "vpack.c.bf16": 2,
+    "vpack.i.bf16": 1,
+    "vpcnt": 1,
+    "vpop.eup": 17,
+    "vpop.permute.xlu0": 1,
+    "vpop.trf.xlu0": 16,
+    "vpop.xlane.xlu0": 11,
+    "vpop.xlane.xlu1": 3,
+    "vpow2.f32": 4,
+    "vrcp.f32": 4,
+    "vrot.lane.b32.xlu0": 1,
+    "vround.rtna.f32": 1,
+    "vround.rtne.f32": 1,
+    "vrsqrt.f32": 2,
+    "vsel": 339,
+    "vshll.u32": 263,
+    "vshra.s32": 2,
+    "vshrl.u32": 140,
+    "vsinq.f32": 1,
+    "vst": 68,
+    "vstv": 2,
+    "vsub.bf16": 1,
+    "vsub.f32": 5,
+    "vsub.s32": 141,
+    "vsyncadd": 53,
+    "vsyncpa": 110,
+    "vtanh.f32": 1,
+    "vtrunc.f32": 3,
+    "vunpack.c.l.bf16": 2,
+    "vunpack.i.l.bf16": 1,
+    "vweird.f32": 2,
+    "vxor.u32": 8,
+    "vxpose.xlu0.b32.cont": 14,
+    "vxpose.xlu0.b32.end": 1,
+    "vxpose.xlu0.b32.start": 1
+  },
+  "artifact_root": "/Users/shuransun/accelerator-microbenchmarks/artifacts/non_mxu_llo/exp-ecm4j8q5nj",
+  "case_count": 53,
+  "cases": [
+    {
+      "bundle_sha256": "2bd0b81f4e0542ae034b7f49cc8a7839f86b5b12316ad53859f8ea032d527829",
+      "case_id": "abs_neg_sign_f32",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vadd.f32": 2,
+        "vand.u32": 2,
+        "vcmp.gt.f32.partialorder": 1,
+        "vmul.f32": 1,
+        "vor.u32": 1,
+        "vsel": 1,
+        "vsub.f32": 1
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "memory": 6,
+        "predicate": 8,
+        "spu": 2,
+        "vector_mask": 2,
+        "vpu": 7
+      },
+      "final_bundle": "cases/abs_neg_sign_f32/compiler/llo/final_bundle.llo",
+      "instruction_count": 30,
+      "primitives": [
+        "lax.abs",
+        "lax.neg",
+        "lax.sign"
+      ],
+      "source_compute_opcodes": {
+        "vadd.f32": 2,
+        "vand.u32": 2,
+        "vcmp.gt.f32.partialorder": 1,
+        "vmul.f32": 1,
+        "vor.u32": 1,
+        "vsel": 1,
+        "vsub.f32": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 24
+    },
+    {
+      "bundle_sha256": "7a003c3acbf84fd46c27a259cf21477219e8793c968cbe72867232b40af2db77",
+      "case_id": "abs_neg_sign_s32",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vadd.s32": 2,
+        "vcmp.gt.s32.totalorder": 1,
+        "vcmp.lt.s32.totalorder": 1,
+        "vmin.u32": 1,
+        "vmov": 1,
+        "vmul.u32": 1,
+        "vsel": 2,
+        "vsub.s32": 2
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "memory": 6,
+        "predicate": 8,
+        "spu": 2,
+        "vector_mask": 4,
+        "vpu": 7
+      },
+      "final_bundle": "cases/abs_neg_sign_s32/compiler/llo/final_bundle.llo",
+      "instruction_count": 32,
+      "primitives": [
+        "lax.abs",
+        "lax.neg",
+        "lax.sign"
+      ],
+      "source_compute_opcodes": {
+        "vadd.s32": 2,
+        "vcmp.gt.s32.totalorder": 1,
+        "vcmp.lt.s32.totalorder": 1,
+        "vmin.u32": 1,
+        "vmov": 1,
+        "vmul.u32": 1,
+        "vsel": 2,
+        "vsub.s32": 2
+      },
+      "status": "succeeded",
+      "unique_opcodes": 25
+    },
+    {
+      "bundle_sha256": "4810124dca4be6c524d69d530bfbb253321b6c352f576d92afa5d268e61adc1d",
+      "case_id": "add_bf16",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vadd.bf16": 1
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "memory": 8,
+        "predicate": 8,
+        "spu": 2,
+        "vpu": 1
+      },
+      "final_bundle": "cases/add_bf16/compiler/llo/final_bundle.llo",
+      "instruction_count": 24,
+      "primitives": [
+        "lax.add"
+      ],
+      "source_compute_opcodes": {
+        "vadd.bf16": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 18
+    },
+    {
+      "bundle_sha256": "d991fdba558c3648751058f28c3853061abfdcdc2955d42c8fb6ab1807fd0c23",
+      "case_id": "add_f32",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vadd.f32": 1
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "memory": 8,
+        "predicate": 8,
+        "spu": 2,
+        "vpu": 1
+      },
+      "final_bundle": "cases/add_f32/compiler/llo/final_bundle.llo",
+      "instruction_count": 24,
+      "primitives": [
+        "lax.add"
+      ],
+      "source_compute_opcodes": {
+        "vadd.f32": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 18
+    },
+    {
+      "bundle_sha256": "c59d258a5023d407222acc81c7b6ca189101875806672a1b1115ab1f3d682878",
+      "case_id": "add_s32",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vadd.s32": 1
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "memory": 8,
+        "predicate": 8,
+        "spu": 2,
+        "vpu": 1
+      },
+      "final_bundle": "cases/add_s32/compiler/llo/final_bundle.llo",
+      "instruction_count": 24,
+      "primitives": [
+        "lax.add"
+      ],
+      "source_compute_opcodes": {
+        "vadd.s32": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 18
+    },
+    {
+      "bundle_sha256": "af05b099a2453e63d2e9f309f130897b168836f2536b70545ec274ba0c68bcf2",
+      "case_id": "argminmax_f32",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vadd.s32": 1,
+        "vmax.index.xlane.f32.xlu0": 1,
+        "vmin.index.xlane.f32.xlu0": 1,
+        "vmul.u32": 1,
+        "vpop.xlane.xlu0": 2
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "memory": 6,
+        "predicate": 8,
+        "spu": 2,
+        "vpu": 2,
+        "xlu_reduce": 4
+      },
+      "final_bundle": "cases/argminmax_f32/compiler/llo/final_bundle.llo",
+      "instruction_count": 27,
+      "primitives": [
+        "lax.argmin",
+        "lax.argmax"
+      ],
+      "source_compute_opcodes": {
+        "vadd.s32": 1,
+        "vmax.index.xlane.f32.xlu0": 1,
+        "vmin.index.xlane.f32.xlu0": 1,
+        "vmul.u32": 1,
+        "vpop.xlane.xlu0": 2
+      },
+      "status": "succeeded",
+      "unique_opcodes": 22
+    },
+    {
+      "bundle_sha256": "88d48ed3b658fa392ba24b2685801ad5ab53e55be55b307d9164cbc59ae79372",
+      "case_id": "bf16_to_f32",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vunpack.c.l.bf16": 1
+      },
+      "family_counts": {
+        "control_other": 4,
+        "convert_pack": 1,
+        "dma": 1,
+        "memory": 6,
+        "predicate": 8,
+        "spu": 2
+      },
+      "final_bundle": "cases/bf16_to_f32/compiler/llo/final_bundle.llo",
+      "instruction_count": 22,
+      "primitives": [
+        "lax.convert_element_type"
+      ],
+      "source_compute_opcodes": {
+        "vunpack.c.l.bf16": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 18
+    },
+    {
+      "bundle_sha256": "8c9232c8dd0d064971a879c714214e89cb0001c806a702c467ba5d7a82fc90cd",
+      "case_id": "bitcast_f32_u32",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "memory": 6,
+        "predicate": 8,
+        "spu": 2
+      },
+      "final_bundle": "cases/bitcast_f32_u32/compiler/llo/final_bundle.llo",
+      "instruction_count": 21,
+      "primitives": [
+        "lax.bitcast_convert_type"
+      ],
+      "source_compute_opcodes": {},
+      "status": "succeeded",
+      "unique_opcodes": 17
+    },
+    {
+      "bundle_sha256": "4c98364d696f7b719bfec664c5410408760ae7bf27970dd85328e5187c624b16",
+      "case_id": "bitwise_u32",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vand.u32": 1,
+        "vor.u32": 1,
+        "vxor.u32": 1
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "memory": 8,
+        "predicate": 8,
+        "spu": 2,
+        "vpu": 3
+      },
+      "final_bundle": "cases/bitwise_u32/compiler/llo/final_bundle.llo",
+      "instruction_count": 26,
+      "primitives": [
+        "lax.and",
+        "lax.or",
+        "lax.xor"
+      ],
+      "source_compute_opcodes": {
+        "vand.u32": 1,
+        "vor.u32": 1,
+        "vxor.u32": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 20
+    },
+    {
+      "bundle_sha256": "98bb8671523713a5cb1d8f0d715f7d7950eb3c9aaa5d352dda0bc9750f447903",
+      "case_id": "clz_popcount",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vadd.s32": 1,
+        "vclz": 1,
+        "vpcnt": 1
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "memory": 6,
+        "predicate": 8,
+        "spu": 2,
+        "vpu": 3
+      },
+      "final_bundle": "cases/clz_popcount/compiler/llo/final_bundle.llo",
+      "instruction_count": 24,
+      "primitives": [
+        "lax.clz",
+        "lax.population_count"
+      ],
+      "source_compute_opcodes": {
+        "vadd.s32": 1,
+        "vclz": 1,
+        "vpcnt": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 20
+    },
+    {
+      "bundle_sha256": "616137a6fa5d710b633eed0e8c8bc79e9094beed505946a0efc740cd8fe9e5d1",
+      "case_id": "compare_select_f32",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vadd.f32": 5,
+        "vcmp.eq.f32.partialorder": 1,
+        "vcmp.ge.f32.partialorder": 1,
+        "vcmp.gt.f32.partialorder": 1,
+        "vcmp.le.f32.partialorder": 1,
+        "vcmp.lt.f32.partialorder": 1,
+        "vcmp.ne.f32.partialorder": 1,
+        "vmul.f32": 5,
+        "vsel": 6
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "memory": 8,
+        "predicate": 8,
+        "spu": 2,
+        "vector_mask": 12,
+        "vpu": 10
+      },
+      "final_bundle": "cases/compare_select_f32/compiler/llo/final_bundle.llo",
+      "instruction_count": 45,
+      "primitives": [
+        "lax.eq",
+        "lax.ne",
+        "lax.lt",
+        "lax.le",
+        "lax.gt",
+        "lax.ge",
+        "lax.select_n"
+      ],
+      "source_compute_opcodes": {
+        "vadd.f32": 5,
+        "vcmp.eq.f32.partialorder": 1,
+        "vcmp.ge.f32.partialorder": 1,
+        "vcmp.gt.f32.partialorder": 1,
+        "vcmp.le.f32.partialorder": 1,
+        "vcmp.lt.f32.partialorder": 1,
+        "vcmp.ne.f32.partialorder": 1,
+        "vmul.f32": 5,
+        "vsel": 6
+      },
+      "status": "succeeded",
+      "unique_opcodes": 26
+    },
+    {
+      "bundle_sha256": "adc8ff3e0718a4c37677e8276b05e17f207baa7ee15e7f5a9d87fdfdaa40fd0f",
+      "case_id": "compare_select_s32",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vadd.s32": 5,
+        "vcmp.ge.s32.totalorder": 1,
+        "vcmp.gt.s32.totalorder": 1,
+        "vcmp.le.s32.totalorder": 1,
+        "vcmp.lt.s32.totalorder": 1,
+        "vmul.u32": 5,
+        "vsel": 4
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "memory": 8,
+        "predicate": 8,
+        "spu": 2,
+        "vector_mask": 8,
+        "vpu": 10
+      },
+      "final_bundle": "cases/compare_select_s32/compiler/llo/final_bundle.llo",
+      "instruction_count": 41,
+      "primitives": [
+        "lax.eq",
+        "lax.ne",
+        "lax.lt",
+        "lax.le",
+        "lax.gt",
+        "lax.ge",
+        "lax.select_n"
+      ],
+      "source_compute_opcodes": {
+        "vadd.s32": 5,
+        "vcmp.ge.s32.totalorder": 1,
+        "vcmp.gt.s32.totalorder": 1,
+        "vcmp.le.s32.totalorder": 1,
+        "vcmp.lt.s32.totalorder": 1,
+        "vmul.u32": 5,
+        "vsel": 4
+      },
+      "status": "succeeded",
+      "unique_opcodes": 24
+    },
+    {
+      "bundle_sha256": "e16c798cb8b424cd5924317737fd1d9d5d731574b5239751d563032ccafbae4d",
+      "case_id": "div_f32",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vmul.f32": 1,
+        "vpop.eup": 1,
+        "vrcp.f32": 1
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "eup": 1,
+        "memory": 8,
+        "predicate": 8,
+        "spu": 2,
+        "vpu": 2
+      },
+      "final_bundle": "cases/div_f32/compiler/llo/final_bundle.llo",
+      "instruction_count": 26,
+      "primitives": [
+        "lax.div"
+      ],
+      "source_compute_opcodes": {
+        "vmul.f32": 1,
+        "vpop.eup": 1,
+        "vrcp.f32": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 20
+    },
+    {
+      "bundle_sha256": "62a4087c7847b1f2eaf22e8318e9bdad7cf3f4f2005fc73fc44a02c646fd6aac",
+      "case_id": "div_s32",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vadd.s32": 32,
+        "vcmp.ge.u32.totalorder": 32,
+        "vcmp.lt.s32.totalorder": 2,
+        "vcmp.ne.s32.totalorder": 1,
+        "vmand": 1,
+        "vmin.u32": 2,
+        "vmxor": 1,
+        "vor.u32": 31,
+        "vsel": 64,
+        "vshll.u32": 63,
+        "vshrl.u32": 32,
+        "vsub.s32": 34
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "memory": 8,
+        "predicate": 8,
+        "spu": 2,
+        "vector_mask": 101,
+        "vpu": 194
+      },
+      "final_bundle": "cases/div_s32/compiler/llo/final_bundle.llo",
+      "instruction_count": 318,
+      "primitives": [
+        "lax.div"
+      ],
+      "source_compute_opcodes": {
+        "vadd.s32": 32,
+        "vcmp.ge.u32.totalorder": 32,
+        "vcmp.lt.s32.totalorder": 2,
+        "vcmp.ne.s32.totalorder": 1,
+        "vmand": 1,
+        "vmin.u32": 2,
+        "vmxor": 1,
+        "vor.u32": 31,
+        "vsel": 64,
+        "vshll.u32": 63,
+        "vshrl.u32": 32,
+        "vsub.s32": 34
+      },
+      "status": "succeeded",
+      "unique_opcodes": 29
+    },
+    {
+      "bundle_sha256": "93a2604f71e078cbc0c285cbd9b6380b2b4a82fd4abb229433d5a9547f46aa52",
+      "case_id": "div_u32",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vadd.s32": 32,
+        "vcmp.ge.u32.totalorder": 32,
+        "vor.u32": 31,
+        "vsel": 63,
+        "vshll.u32": 63,
+        "vshrl.u32": 32,
+        "vsub.s32": 31
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "memory": 8,
+        "predicate": 8,
+        "spu": 2,
+        "vector_mask": 95,
+        "vpu": 189
+      },
+      "final_bundle": "cases/div_u32/compiler/llo/final_bundle.llo",
+      "instruction_count": 307,
+      "primitives": [
+        "lax.div"
+      ],
+      "source_compute_opcodes": {
+        "vadd.s32": 32,
+        "vcmp.ge.u32.totalorder": 32,
+        "vor.u32": 31,
+        "vsel": 63,
+        "vshll.u32": 63,
+        "vshrl.u32": 32,
+        "vsub.s32": 31
+      },
+      "status": "succeeded",
+      "unique_opcodes": 24
+    },
+    {
+      "bundle_sha256": "472222630585f004b1c0792a2d6a1ca6e3c3579f3db544ab41b98792c015dd19",
+      "case_id": "erf_inv",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vadd.f32": 12,
+        "vand.u32": 3,
+        "vcmp.eq.f32.partialorder": 3,
+        "vcmp.lt.f32.partialorder": 2,
+        "vlog2.f32": 1,
+        "vmov": 9,
+        "vmul.f32": 15,
+        "vpop.eup": 2,
+        "vrsqrt.f32": 1,
+        "vsel": 14,
+        "vsub.f32": 2
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "eup": 4,
+        "memory": 6,
+        "predicate": 8,
+        "spu": 2,
+        "vector_mask": 19,
+        "vpu": 41
+      },
+      "final_bundle": "cases/erf_inv/compiler/llo/final_bundle.llo",
+      "instruction_count": 85,
+      "primitives": [
+        "lax.erf_inv"
+      ],
+      "source_compute_opcodes": {
+        "vadd.f32": 12,
+        "vand.u32": 3,
+        "vcmp.eq.f32.partialorder": 3,
+        "vcmp.lt.f32.partialorder": 2,
+        "vlog2.f32": 1,
+        "vmov": 9,
+        "vmul.f32": 15,
+        "vpop.eup": 2,
+        "vrsqrt.f32": 1,
+        "vsel": 14,
+        "vsub.f32": 2
+      },
+      "status": "succeeded",
+      "unique_opcodes": 28
+    },
+    {
+      "bundle_sha256": "f50bdd98862ecdd1967ea2ec33ebc61b67d4b3ba6efca304df75c84f05434ddc",
+      "case_id": "exp_exp2",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vadd.f32": 1,
+        "vmul.f32": 1,
+        "vpop.eup": 2,
+        "vpow2.f32": 2
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "eup": 4,
+        "memory": 6,
+        "predicate": 8,
+        "spu": 2,
+        "vpu": 2
+      },
+      "final_bundle": "cases/exp_exp2/compiler/llo/final_bundle.llo",
+      "instruction_count": 27,
+      "primitives": [
+        "lax.exp",
+        "lax.exp2"
+      ],
+      "source_compute_opcodes": {
+        "vadd.f32": 1,
+        "vmul.f32": 1,
+        "vpop.eup": 2,
+        "vpow2.f32": 2
+      },
+      "status": "succeeded",
+      "unique_opcodes": 21
+    },
+    {
+      "bundle_sha256": "a17c9f4aadb141db719ede27e47557cda21ebd42df26740ebcac13100a1129ca",
+      "case_id": "f32_to_bf16",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vpack.c.bf16": 1
+      },
+      "family_counts": {
+        "control_other": 4,
+        "convert_pack": 1,
+        "dma": 1,
+        "memory": 6,
+        "predicate": 8,
+        "spu": 2
+      },
+      "final_bundle": "cases/f32_to_bf16/compiler/llo/final_bundle.llo",
+      "instruction_count": 22,
+      "primitives": [
+        "lax.convert_element_type"
+      ],
+      "source_compute_opcodes": {
+        "vpack.c.bf16": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 18
+    },
+    {
+      "bundle_sha256": "78b10d74971b0ecd6f87c5f33d08b9505d815b5d9d0b10de9cd05ee94e65be45",
+      "case_id": "f32_to_s32",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vcvt.f32.s32": 1,
+        "vtrunc.f32": 1
+      },
+      "family_counts": {
+        "control_other": 4,
+        "convert_pack": 1,
+        "dma": 1,
+        "memory": 6,
+        "predicate": 8,
+        "spu": 2,
+        "vpu": 1
+      },
+      "final_bundle": "cases/f32_to_s32/compiler/llo/final_bundle.llo",
+      "instruction_count": 23,
+      "primitives": [
+        "lax.convert_element_type"
+      ],
+      "source_compute_opcodes": {
+        "vcvt.f32.s32": 1,
+        "vtrunc.f32": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 19
+    },
+    {
+      "bundle_sha256": null,
+      "case_id": "iota_f32",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vadd.f32": 1,
+        "vand.u32": 1,
+        "vcvt.s32.f32": 1,
+        "vlaneseq": 1
+      },
+      "family_counts": {
+        "control_other": 4,
+        "convert_pack": 1,
+        "dma": 1,
+        "memory": 6,
+        "predicate": 8,
+        "spu": 2,
+        "vpu": 3
+      },
+      "final_bundle": "cases/iota_f32/compiler/llo/final_bundle.llo",
+      "instruction_count": 25,
+      "primitives": [
+        "lax.iota"
+      ],
+      "source_compute_opcodes": {
+        "vadd.f32": 1,
+        "vand.u32": 1,
+        "vcvt.s32.f32": 1,
+        "vlaneseq": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 21
+    },
+    {
+      "bundle_sha256": "dbf7aaf11c5d58fcece0ae0dab3e120057e00a2f2b27b60e6fda2c6245c2aaca",
+      "case_id": "isfinite_clamp",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vclamps-f32": 1,
+        "vmmov": 1,
+        "vmxor": 1,
+        "vsel": 1,
+        "vweird.f32": 1
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "memory": 8,
+        "predicate": 8,
+        "spu": 2,
+        "vector_mask": 3,
+        "vpu": 2
+      },
+      "final_bundle": "cases/isfinite_clamp/compiler/llo/final_bundle.llo",
+      "instruction_count": 28,
+      "primitives": [
+        "lax.is_finite",
+        "lax.clamp"
+      ],
+      "source_compute_opcodes": {
+        "vclamps-f32": 1,
+        "vmmov": 1,
+        "vmxor": 1,
+        "vsel": 1,
+        "vweird.f32": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 22
+    },
+    {
+      "bundle_sha256": "64e5dd8796a2e0171b723e5d15919f7eaa72a57e41154dd475375e0fbed355af",
+      "case_id": "log_log1p",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vadd.f32": 3,
+        "vand.u32": 1,
+        "vcmp.lt.f32.partialorder": 1,
+        "vlog2.f32": 2,
+        "vmul.f32": 4,
+        "vpop.eup": 2,
+        "vsel": 1
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "eup": 4,
+        "memory": 6,
+        "predicate": 8,
+        "spu": 2,
+        "vector_mask": 2,
+        "vpu": 8
+      },
+      "final_bundle": "cases/log_log1p/compiler/llo/final_bundle.llo",
+      "instruction_count": 35,
+      "primitives": [
+        "lax.log",
+        "lax.log1p"
+      ],
+      "source_compute_opcodes": {
+        "vadd.f32": 3,
+        "vand.u32": 1,
+        "vcmp.lt.f32.partialorder": 1,
+        "vlog2.f32": 2,
+        "vmul.f32": 4,
+        "vpop.eup": 2,
+        "vsel": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 24
+    },
+    {
+      "bundle_sha256": "78340b575a74ff36f1d8e8924a270e25a70aa5e6209da5defd8a0dbb45906351",
+      "case_id": "minmax_bf16",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vadd.bf16": 1,
+        "vmax.bf16": 1,
+        "vmin.bf16": 1,
+        "vmul.bf16": 1
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "memory": 8,
+        "predicate": 8,
+        "spu": 2,
+        "vpu": 4
+      },
+      "final_bundle": "cases/minmax_bf16/compiler/llo/final_bundle.llo",
+      "instruction_count": 27,
+      "primitives": [
+        "lax.min",
+        "lax.max"
+      ],
+      "source_compute_opcodes": {
+        "vadd.bf16": 1,
+        "vmax.bf16": 1,
+        "vmin.bf16": 1,
+        "vmul.bf16": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 21
+    },
+    {
+      "bundle_sha256": "6d7ae4f19046985e9152ae117a96a5fbed57820629d31e504cb4ea18a6d5817b",
+      "case_id": "minmax_f32",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vadd.f32": 1,
+        "vmax.f32": 1,
+        "vmin.f32": 1,
+        "vmul.f32": 1
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "memory": 8,
+        "predicate": 8,
+        "spu": 2,
+        "vpu": 4
+      },
+      "final_bundle": "cases/minmax_f32/compiler/llo/final_bundle.llo",
+      "instruction_count": 27,
+      "primitives": [
+        "lax.min",
+        "lax.max"
+      ],
+      "source_compute_opcodes": {
+        "vadd.f32": 1,
+        "vmax.f32": 1,
+        "vmin.f32": 1,
+        "vmul.f32": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 21
+    },
+    {
+      "bundle_sha256": "455cece2a9adf1fe848148a4650b7b60acde35650ac32ec9695f8cc5fca8fe1e",
+      "case_id": "minmax_s32",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vadd.s32": 1,
+        "vcmp.gt.s32.totalorder": 1,
+        "vcmp.lt.s32.totalorder": 1,
+        "vmul.u32": 1,
+        "vsel": 2
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "memory": 8,
+        "predicate": 8,
+        "spu": 2,
+        "vector_mask": 4,
+        "vpu": 2
+      },
+      "final_bundle": "cases/minmax_s32/compiler/llo/final_bundle.llo",
+      "instruction_count": 29,
+      "primitives": [
+        "lax.min",
+        "lax.max"
+      ],
+      "source_compute_opcodes": {
+        "vadd.s32": 1,
+        "vcmp.gt.s32.totalorder": 1,
+        "vcmp.lt.s32.totalorder": 1,
+        "vmul.u32": 1,
+        "vsel": 2
+      },
+      "status": "succeeded",
+      "unique_opcodes": 22
+    },
+    {
+      "bundle_sha256": "bcac20ad78f04c10847462e09e93828443f437f490a8c02bc36df32c552788fe",
+      "case_id": "mul_bf16",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vmul.bf16": 1
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "memory": 8,
+        "predicate": 8,
+        "spu": 2,
+        "vpu": 1
+      },
+      "final_bundle": "cases/mul_bf16/compiler/llo/final_bundle.llo",
+      "instruction_count": 24,
+      "primitives": [
+        "lax.mul"
+      ],
+      "source_compute_opcodes": {
+        "vmul.bf16": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 18
+    },
+    {
+      "bundle_sha256": "8371db9bd98c5f8d20659e6d48826cc83486da2c8b9e286790d0cd254c60d444",
+      "case_id": "mul_f32",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vmul.f32": 1
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "memory": 8,
+        "predicate": 8,
+        "spu": 2,
+        "vpu": 1
+      },
+      "final_bundle": "cases/mul_f32/compiler/llo/final_bundle.llo",
+      "instruction_count": 24,
+      "primitives": [
+        "lax.mul"
+      ],
+      "source_compute_opcodes": {
+        "vmul.f32": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 18
+    },
+    {
+      "bundle_sha256": "c1c9384780afdd5c2b902bfc3ad2c34bb83972325b8cc81475184fc44f6b3115",
+      "case_id": "mul_u32",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vmul.u32": 1
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "memory": 8,
+        "predicate": 8,
+        "spu": 2,
+        "vpu": 1
+      },
+      "final_bundle": "cases/mul_u32/compiler/llo/final_bundle.llo",
+      "instruction_count": 24,
+      "primitives": [
+        "lax.mul"
+      ],
+      "source_compute_opcodes": {
+        "vmul.u32": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 18
+    },
+    {
+      "bundle_sha256": "10847f7e443eebfe4623c4004cc0d2498b7b693152c141bfd9c1735e7c4556d5",
+      "case_id": "pack_f32_bf16",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vpack.i.bf16": 1
+      },
+      "family_counts": {
+        "control_other": 4,
+        "convert_pack": 1,
+        "dma": 1,
+        "memory": 8,
+        "predicate": 8,
+        "spu": 2
+      },
+      "final_bundle": "cases/pack_f32_bf16/compiler/llo/final_bundle.llo",
+      "instruction_count": 24,
+      "primitives": [
+        "pltpu.pack_elementwise"
+      ],
+      "source_compute_opcodes": {
+        "vpack.i.bf16": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 18
+    },
+    {
+      "bundle_sha256": "444c346135c8a5ff629bb8896a44c563199a46b1fddf0eb12768ef08c9f350cd",
+      "case_id": "pow_nextafter",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vadd.f32": 1,
+        "vadd.s32": 1,
+        "vand.u32": 5,
+        "vcmp.eq.f32.partialorder": 8,
+        "vcmp.eq.s32.totalorder": 3,
+        "vcmp.gt.f32.partialorder": 1,
+        "vcmp.gt.u32.totalorder": 1,
+        "vcmp.lt.f32.partialorder": 3,
+        "vcmp.lt.s32.totalorder": 1,
+        "vcmp.ne.f32.partialorder": 3,
+        "vcmp.ne.s32.totalorder": 1,
+        "vcvt.f32.s32": 1,
+        "vlog2.f32": 1,
+        "vmand": 5,
+        "vmneg": 1,
+        "vmor": 5,
+        "vmov": 3,
+        "vmul.f32": 1,
+        "vmxor": 1,
+        "vor.u32": 1,
+        "vpop.eup": 2,
+        "vpow2.f32": 1,
+        "vsel": 19,
+        "vtrunc.f32": 2,
+        "vxor.u32": 2
+      },
+      "family_counts": {
+        "control_other": 4,
+        "convert_pack": 1,
+        "dma": 1,
+        "eup": 4,
+        "memory": 8,
+        "predicate": 8,
+        "spu": 2,
+        "vector_mask": 52,
+        "vpu": 16
+      },
+      "final_bundle": "cases/pow_nextafter/compiler/llo/final_bundle.llo",
+      "instruction_count": 96,
+      "primitives": [
+        "lax.pow",
+        "lax.nextafter"
+      ],
+      "source_compute_opcodes": {
+        "vadd.f32": 1,
+        "vadd.s32": 1,
+        "vand.u32": 5,
+        "vcmp.eq.f32.partialorder": 8,
+        "vcmp.eq.s32.totalorder": 3,
+        "vcmp.gt.f32.partialorder": 1,
+        "vcmp.gt.u32.totalorder": 1,
+        "vcmp.lt.f32.partialorder": 3,
+        "vcmp.lt.s32.totalorder": 1,
+        "vcmp.ne.f32.partialorder": 3,
+        "vcmp.ne.s32.totalorder": 1,
+        "vcvt.f32.s32": 1,
+        "vlog2.f32": 1,
+        "vmand": 5,
+        "vmneg": 1,
+        "vmor": 5,
+        "vmov": 3,
+        "vmul.f32": 1,
+        "vmxor": 1,
+        "vor.u32": 1,
+        "vpop.eup": 2,
+        "vpow2.f32": 1,
+        "vsel": 19,
+        "vtrunc.f32": 2,
+        "vxor.u32": 2
+      },
+      "status": "succeeded",
+      "unique_opcodes": 42
+    },
+    {
+      "bundle_sha256": "ed7aa576c5ea5eb2183951237ee4282e23f44e99d983dfe3f7167e7d50b2ba2e",
+      "case_id": "reduce_minmax_bf16",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vadd.bf16": 1,
+        "vcmask": 1,
+        "vmax.xlane.bf16.xlu0": 1,
+        "vmin.xlane.bf16.xlu0": 1,
+        "vmul.bf16": 1,
+        "vpop.xlane.xlu0": 2,
+        "vsel": 2
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "memory": 6,
+        "predicate": 8,
+        "spu": 2,
+        "vector_mask": 3,
+        "vpu": 2,
+        "xlu_reduce": 4
+      },
+      "final_bundle": "cases/reduce_minmax_bf16/compiler/llo/final_bundle.llo",
+      "instruction_count": 30,
+      "primitives": [
+        "lax.reduce_min",
+        "lax.reduce_max"
+      ],
+      "source_compute_opcodes": {
+        "vadd.bf16": 1,
+        "vcmask": 1,
+        "vmax.xlane.bf16.xlu0": 1,
+        "vmin.xlane.bf16.xlu0": 1,
+        "vmul.bf16": 1,
+        "vpop.xlane.xlu0": 2,
+        "vsel": 2
+      },
+      "status": "succeeded",
+      "unique_opcodes": 24
+    },
+    {
+      "bundle_sha256": "bf189778d68a0b2f09c6138a1167f27d343691c90f7e7cfddbc9648f183e199c",
+      "case_id": "reduce_minmax_f32",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vadd.f32": 1,
+        "vmax.xlane.f32.xlu0": 1,
+        "vmin.xlane.f32.xlu0": 1,
+        "vmul.f32": 1,
+        "vpop.xlane.xlu0": 2
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "memory": 6,
+        "predicate": 8,
+        "spu": 2,
+        "vpu": 2,
+        "xlu_reduce": 4
+      },
+      "final_bundle": "cases/reduce_minmax_f32/compiler/llo/final_bundle.llo",
+      "instruction_count": 27,
+      "primitives": [
+        "lax.reduce_min",
+        "lax.reduce_max"
+      ],
+      "source_compute_opcodes": {
+        "vadd.f32": 1,
+        "vmax.xlane.f32.xlu0": 1,
+        "vmin.xlane.f32.xlu0": 1,
+        "vmul.f32": 1,
+        "vpop.xlane.xlu0": 2
+      },
+      "status": "succeeded",
+      "unique_opcodes": 22
+    },
+    {
+      "bundle_sha256": "1e24a534424c1d8630fd5ab0f56a0be35e2d472179fbd6eabe5c8189e80772a2",
+      "case_id": "reduce_s32",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vadd.s32": 5,
+        "vadd.xlane.f32.xlu1": 2,
+        "vand.u32": 1,
+        "vcmp.eq.f32.partialorder": 2,
+        "vcvt.f32.s32": 6,
+        "vcvt.s32.f32": 3,
+        "vmax.xlane.f32.xlu0": 1,
+        "vmax.xlane.f32.xlu1": 1,
+        "vmin.xlane.f32.xlu0": 2,
+        "vpop.xlane.xlu0": 3,
+        "vpop.xlane.xlu1": 3,
+        "vsel": 2,
+        "vshll.u32": 3,
+        "vshra.s32": 1,
+        "vshrl.u32": 1
+      },
+      "family_counts": {
+        "control_other": 4,
+        "convert_pack": 9,
+        "dma": 1,
+        "memory": 6,
+        "predicate": 8,
+        "spu": 2,
+        "vector_mask": 4,
+        "vpu": 11,
+        "xlu_reduce": 12
+      },
+      "final_bundle": "cases/reduce_s32/compiler/llo/final_bundle.llo",
+      "instruction_count": 57,
+      "primitives": [
+        "lax.reduce_sum",
+        "lax.reduce_min",
+        "lax.reduce_max"
+      ],
+      "source_compute_opcodes": {
+        "vadd.s32": 5,
+        "vadd.xlane.f32.xlu1": 2,
+        "vand.u32": 1,
+        "vcmp.eq.f32.partialorder": 2,
+        "vcvt.f32.s32": 6,
+        "vcvt.s32.f32": 3,
+        "vmax.xlane.f32.xlu0": 1,
+        "vmax.xlane.f32.xlu1": 1,
+        "vmin.xlane.f32.xlu0": 2,
+        "vpop.xlane.xlu0": 3,
+        "vpop.xlane.xlu1": 3,
+        "vsel": 2,
+        "vshll.u32": 3,
+        "vshra.s32": 1,
+        "vshrl.u32": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 32
+    },
+    {
+      "bundle_sha256": "91094373e8d384858c7b2e7c72f50e61d6b9d8c25b4edacd80e29d856e99e0be",
+      "case_id": "reduce_sum_bf16",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vadd.xlane.f32.xlu0": 1,
+        "vpack.c.bf16": 1,
+        "vpop.xlane.xlu0": 1,
+        "vunpack.c.l.bf16": 1
+      },
+      "family_counts": {
+        "control_other": 4,
+        "convert_pack": 2,
+        "dma": 1,
+        "memory": 6,
+        "predicate": 8,
+        "spu": 2,
+        "xlu_reduce": 2
+      },
+      "final_bundle": "cases/reduce_sum_bf16/compiler/llo/final_bundle.llo",
+      "instruction_count": 25,
+      "primitives": [
+        "lax.reduce_sum"
+      ],
+      "source_compute_opcodes": {
+        "vadd.xlane.f32.xlu0": 1,
+        "vpack.c.bf16": 1,
+        "vpop.xlane.xlu0": 1,
+        "vunpack.c.l.bf16": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 21
+    },
+    {
+      "bundle_sha256": "f9e1b495b0a1b96e8a51efdcd59bdf7cdc38db407484b23c8dc3586d1b5e619c",
+      "case_id": "reduce_sum_f32",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vadd.xlane.f32.xlu0": 1,
+        "vpop.xlane.xlu0": 1
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "memory": 6,
+        "predicate": 8,
+        "spu": 2,
+        "xlu_reduce": 2
+      },
+      "final_bundle": "cases/reduce_sum_f32/compiler/llo/final_bundle.llo",
+      "instruction_count": 23,
+      "primitives": [
+        "lax.reduce_sum"
+      ],
+      "source_compute_opcodes": {
+        "vadd.xlane.f32.xlu0": 1,
+        "vpop.xlane.xlu0": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 19
+    },
+    {
+      "bundle_sha256": "426f40cb2be1aa5740c103ea1ae9a5b10dbf25abd21313713e2e5c61d6027c6f",
+      "case_id": "rem_f32",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vand.u32": 4,
+        "vcmp.eq.f32.partialorder": 1,
+        "vfloor.f32": 1,
+        "vmul.f32": 2,
+        "vor.u32": 1,
+        "vpop.eup": 1,
+        "vrcp.f32": 1,
+        "vsel": 1,
+        "vsub.f32": 1
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "eup": 1,
+        "memory": 8,
+        "predicate": 8,
+        "spu": 2,
+        "vector_mask": 2,
+        "vpu": 10
+      },
+      "final_bundle": "cases/rem_f32/compiler/llo/final_bundle.llo",
+      "instruction_count": 36,
+      "primitives": [
+        "lax.rem"
+      ],
+      "source_compute_opcodes": {
+        "vand.u32": 4,
+        "vcmp.eq.f32.partialorder": 1,
+        "vfloor.f32": 1,
+        "vmul.f32": 2,
+        "vor.u32": 1,
+        "vpop.eup": 1,
+        "vrcp.f32": 1,
+        "vsel": 1,
+        "vsub.f32": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 26
+    },
+    {
+      "bundle_sha256": "0f895da182ceaacd93be3ab9ed54a90ddf8216be772942fa2aeefc347bdd545f",
+      "case_id": "rem_s32",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vadd.s32": 31,
+        "vcmp.ge.u32.totalorder": 32,
+        "vcmp.lt.s32.totalorder": 1,
+        "vmin.u32": 2,
+        "vor.u32": 31,
+        "vsel": 64,
+        "vshll.u32": 62,
+        "vshrl.u32": 32,
+        "vsub.s32": 35
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "memory": 8,
+        "predicate": 8,
+        "spu": 2,
+        "vector_mask": 97,
+        "vpu": 193
+      },
+      "final_bundle": "cases/rem_s32/compiler/llo/final_bundle.llo",
+      "instruction_count": 313,
+      "primitives": [
+        "lax.rem"
+      ],
+      "source_compute_opcodes": {
+        "vadd.s32": 31,
+        "vcmp.ge.u32.totalorder": 32,
+        "vcmp.lt.s32.totalorder": 1,
+        "vmin.u32": 2,
+        "vor.u32": 31,
+        "vsel": 64,
+        "vshll.u32": 62,
+        "vshrl.u32": 32,
+        "vsub.s32": 35
+      },
+      "status": "succeeded",
+      "unique_opcodes": 26
+    },
+    {
+      "bundle_sha256": "7aae7f05b17ba35833460d783fcded64308e54e6ada486a440c97634aeec44b2",
+      "case_id": "rem_u32",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vadd.s32": 31,
+        "vcmp.ge.u32.totalorder": 32,
+        "vor.u32": 31,
+        "vsel": 63,
+        "vshll.u32": 62,
+        "vshrl.u32": 32,
+        "vsub.s32": 32
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "memory": 8,
+        "predicate": 8,
+        "spu": 2,
+        "vector_mask": 95,
+        "vpu": 188
+      },
+      "final_bundle": "cases/rem_u32/compiler/llo/final_bundle.llo",
+      "instruction_count": 306,
+      "primitives": [
+        "lax.rem"
+      ],
+      "source_compute_opcodes": {
+        "vadd.s32": 31,
+        "vcmp.ge.u32.totalorder": 32,
+        "vor.u32": 31,
+        "vsel": 63,
+        "vshll.u32": 62,
+        "vshrl.u32": 32,
+        "vsub.s32": 32
+      },
+      "status": "succeeded",
+      "unique_opcodes": 24
+    },
+    {
+      "bundle_sha256": "bf8cb831e67e464d0d18816b6bc0a1142d81417ac1fe14404b1d782cda5d499a",
+      "case_id": "roll_f32",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 2,
+        "sshll.u32": 1,
+        "vpop.permute.xlu0": 1,
+        "vrot.lane.b32.xlu0": 1
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "memory": 6,
+        "predicate": 8,
+        "spu": 3,
+        "xlu_permute": 2
+      },
+      "final_bundle": "cases/roll_f32/compiler/llo/final_bundle.llo",
+      "instruction_count": 24,
+      "primitives": [
+        "pltpu.roll"
+      ],
+      "source_compute_opcodes": {
+        "vpop.permute.xlu0": 1,
+        "vrot.lane.b32.xlu0": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 19
+    },
+    {
+      "bundle_sha256": "cafc54d9295faef83a7757d23a83e274317d2ed273555cfdcef959b240bd3506",
+      "case_id": "round_ceil_floor",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vadd.f32": 3,
+        "vceil.f32": 1,
+        "vfloor.f32": 1,
+        "vround.rtna.f32": 1,
+        "vround.rtne.f32": 1
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "memory": 6,
+        "predicate": 8,
+        "spu": 2,
+        "vpu": 7
+      },
+      "final_bundle": "cases/round_ceil_floor/compiler/llo/final_bundle.llo",
+      "instruction_count": 28,
+      "primitives": [
+        "lax.round",
+        "lax.ceil",
+        "lax.floor"
+      ],
+      "source_compute_opcodes": {
+        "vadd.f32": 3,
+        "vceil.f32": 1,
+        "vfloor.f32": 1,
+        "vround.rtna.f32": 1,
+        "vround.rtne.f32": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 22
+    },
+    {
+      "bundle_sha256": "20f8769007087a18e7eeff1681e942938e4a2f242cb93573c8e9a63519810ef9",
+      "case_id": "s32_to_f32",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vcvt.s32.f32": 1
+      },
+      "family_counts": {
+        "control_other": 4,
+        "convert_pack": 1,
+        "dma": 1,
+        "memory": 6,
+        "predicate": 8,
+        "spu": 2
+      },
+      "final_bundle": "cases/s32_to_f32/compiler/llo/final_bundle.llo",
+      "instruction_count": 22,
+      "primitives": [
+        "lax.convert_element_type"
+      ],
+      "source_compute_opcodes": {
+        "vcvt.s32.f32": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 18
+    },
+    {
+      "bundle_sha256": "29bc0a67ea9182de6a379518812fc4d52c2793baec47726667ba95b20317d749",
+      "case_id": "scalar_arith",
+      "compute_opcodes": {
+        "pnand": 6,
+        "pneg": 2,
+        "por": 5,
+        "sadd.s32": 8,
+        "sand.u32": 2,
+        "scmp.eq.s32.totalorder": 3,
+        "scmp.ge.s32.totalorder": 3,
+        "scmp.gt.s32.totalorder": 1,
+        "scmp.lt.s32.totalorder": 5,
+        "scmp.lt.u32.totalorder": 3,
+        "scmp.ne.s32.totalorder": 4,
+        "scvt.s32.f32": 1,
+        "sdivrem.u32": 1,
+        "smin.u32": 1,
+        "smov": 12,
+        "smul.u32": 1,
+        "smulhi.u32": 1,
+        "sphi": 4,
+        "spop.drf": 1,
+        "sshll.u32": 5,
+        "sshrl.u32": 1,
+        "ssub.s32": 4,
+        "vadd.f32": 1
+      },
+      "family_counts": {
+        "control_other": 11,
+        "dma": 1,
+        "memory": 14,
+        "predicate": 32,
+        "spu": 42,
+        "vpu": 1
+      },
+      "final_bundle": "cases/scalar_arith/compiler/llo/final_bundle.llo",
+      "instruction_count": 101,
+      "primitives": [
+        "pl.program_id",
+        "lax.add",
+        "lax.sub",
+        "lax.mul",
+        "lax.div",
+        "lax.rem",
+        "lax.min",
+        "lax.max"
+      ],
+      "source_compute_opcodes": {
+        "pnand": 6,
+        "pneg": 2,
+        "por": 5,
+        "sadd.s32": 8,
+        "sand.u32": 2,
+        "scmp.eq.s32.totalorder": 3,
+        "scmp.ge.s32.totalorder": 3,
+        "scmp.gt.s32.totalorder": 1,
+        "scmp.lt.s32.totalorder": 5,
+        "scmp.lt.u32.totalorder": 3,
+        "scmp.ne.s32.totalorder": 4,
+        "scvt.s32.f32": 1,
+        "sdivrem.u32": 1,
+        "smin.u32": 1,
+        "smov": 12,
+        "smul.u32": 1,
+        "smulhi.u32": 1,
+        "sphi": 4,
+        "spop.drf": 1,
+        "sshll.u32": 5,
+        "sshrl.u32": 1,
+        "ssub.s32": 4,
+        "vadd.f32": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 37
+    },
+    {
+      "bundle_sha256": "dc29b62d4663d4b96e924a33fde1bdca0e36cd966d23772c8bfc7bf0a6e4eef3",
+      "case_id": "scalar_logic_compare",
+      "compute_opcodes": {
+        "pnand": 6,
+        "pneg": 2,
+        "por": 5,
+        "sadd.s32": 5,
+        "sand.u32": 3,
+        "scmp.eq.s32.totalorder": 3,
+        "scmp.ge.s32.totalorder": 3,
+        "scmp.lt.s32.totalorder": 5,
+        "scmp.lt.u32.totalorder": 3,
+        "scmp.ne.s32.totalorder": 4,
+        "scvt.s32.f32": 1,
+        "smov": 10,
+        "smul.u32": 1,
+        "sor.u32": 1,
+        "sphi": 4,
+        "sshll.u32": 6,
+        "sshrl.u32": 1,
+        "ssub.s32": 1,
+        "sxor.u32": 1,
+        "vadd.f32": 1
+      },
+      "family_counts": {
+        "control_other": 11,
+        "dma": 1,
+        "memory": 14,
+        "predicate": 31,
+        "spu": 34,
+        "vpu": 1
+      },
+      "final_bundle": "cases/scalar_logic_compare/compiler/llo/final_bundle.llo",
+      "instruction_count": 92,
+      "primitives": [
+        "pl.program_id",
+        "lax.and",
+        "lax.or",
+        "lax.xor",
+        "lax.shift_left",
+        "lax.shift_right_logical",
+        "lax.lt",
+        "lax.select_n"
+      ],
+      "source_compute_opcodes": {
+        "pnand": 6,
+        "pneg": 2,
+        "por": 5,
+        "sadd.s32": 5,
+        "sand.u32": 3,
+        "scmp.eq.s32.totalorder": 3,
+        "scmp.ge.s32.totalorder": 3,
+        "scmp.lt.s32.totalorder": 5,
+        "scmp.lt.u32.totalorder": 3,
+        "scmp.ne.s32.totalorder": 4,
+        "scvt.s32.f32": 1,
+        "smov": 10,
+        "smul.u32": 1,
+        "sor.u32": 1,
+        "sphi": 4,
+        "sshll.u32": 6,
+        "sshrl.u32": 1,
+        "ssub.s32": 1,
+        "sxor.u32": 1,
+        "vadd.f32": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 34
+    },
+    {
+      "bundle_sha256": "265eab48e74edb05cee4c81030515530b2e7ab61d4b006cf8a29144b8b6d5e1d",
+      "case_id": "shifts",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vshll.u32": 1,
+        "vshra.s32": 1,
+        "vshrl.u32": 1,
+        "vxor.u32": 2
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "memory": 8,
+        "predicate": 8,
+        "spu": 2,
+        "vpu": 5
+      },
+      "final_bundle": "cases/shifts/compiler/llo/final_bundle.llo",
+      "instruction_count": 28,
+      "primitives": [
+        "lax.shift_left",
+        "lax.shift_right_logical",
+        "lax.shift_right_arithmetic"
+      ],
+      "source_compute_opcodes": {
+        "vshll.u32": 1,
+        "vshra.s32": 1,
+        "vshrl.u32": 1,
+        "vxor.u32": 2
+      },
+      "status": "succeeded",
+      "unique_opcodes": 21
+    },
+    {
+      "bundle_sha256": "2102ab2b5230bb034bece7c45001a39ac543fed38ab9d34bac8c8de8c57ddd11",
+      "case_id": "sin_cos_tan",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vadd.f32": 2,
+        "vadd.s32": 9,
+        "vand.u32": 7,
+        "vc.u32": 1,
+        "vclz": 1,
+        "vcmp.eq.s32.totalorder": 4,
+        "vcmp.gt.s32.totalorder": 1,
+        "vcmp.le.f32.partialorder": 1,
+        "vcmp.lt.s32.totalorder": 8,
+        "vcosq.f32": 1,
+        "vcvt.s32.f32": 1,
+        "vmin.u32": 1,
+        "vmov": 6,
+        "vmul.f32": 2,
+        "vmul.u32": 1,
+        "vmul.u32.u64.high": 2,
+        "vmul.u32.u64.low": 2,
+        "vor.u32": 8,
+        "vpop.eup": 3,
+        "vrcp.f32": 1,
+        "vsel": 28,
+        "vshll.u32": 9,
+        "vshrl.u32": 10,
+        "vsinq.f32": 1,
+        "vsub.s32": 6,
+        "vweird.f32": 1,
+        "vxor.u32": 3
+      },
+      "family_counts": {
+        "control_other": 4,
+        "convert_pack": 1,
+        "dma": 1,
+        "eup": 5,
+        "memory": 6,
+        "predicate": 8,
+        "spu": 2,
+        "vector_mask": 42,
+        "vpu": 72
+      },
+      "final_bundle": "cases/sin_cos_tan/compiler/llo/final_bundle.llo",
+      "instruction_count": 141,
+      "primitives": [
+        "lax.sin",
+        "lax.cos",
+        "lax.tan"
+      ],
+      "source_compute_opcodes": {
+        "vadd.f32": 2,
+        "vadd.s32": 9,
+        "vand.u32": 7,
+        "vc.u32": 1,
+        "vclz": 1,
+        "vcmp.eq.s32.totalorder": 4,
+        "vcmp.gt.s32.totalorder": 1,
+        "vcmp.le.f32.partialorder": 1,
+        "vcmp.lt.s32.totalorder": 8,
+        "vcosq.f32": 1,
+        "vcvt.s32.f32": 1,
+        "vmin.u32": 1,
+        "vmov": 6,
+        "vmul.f32": 2,
+        "vmul.u32": 1,
+        "vmul.u32.u64.high": 2,
+        "vmul.u32.u64.low": 2,
+        "vor.u32": 8,
+        "vpop.eup": 3,
+        "vrcp.f32": 1,
+        "vsel": 28,
+        "vshll.u32": 9,
+        "vshrl.u32": 10,
+        "vsinq.f32": 1,
+        "vsub.s32": 6,
+        "vweird.f32": 1,
+        "vxor.u32": 3
+      },
+      "status": "succeeded",
+      "unique_opcodes": 44
+    },
+    {
+      "bundle_sha256": "c7f6e0017ec0488c44d583481da1d0d7bcf6c4be1df0ed3814ca22ea6aef99bd",
+      "case_id": "sqrt_rsqrt",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vadd.f32": 1,
+        "vand.u32": 1,
+        "vcmp.eq.f32.partialorder": 2,
+        "vmul.f32": 1,
+        "vpop.eup": 1,
+        "vrsqrt.f32": 1,
+        "vsel": 2
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "eup": 2,
+        "memory": 6,
+        "predicate": 8,
+        "spu": 2,
+        "vector_mask": 4,
+        "vpu": 3
+      },
+      "final_bundle": "cases/sqrt_rsqrt/compiler/llo/final_bundle.llo",
+      "instruction_count": 30,
+      "primitives": [
+        "lax.sqrt",
+        "lax.rsqrt"
+      ],
+      "source_compute_opcodes": {
+        "vadd.f32": 1,
+        "vand.u32": 1,
+        "vcmp.eq.f32.partialorder": 2,
+        "vmul.f32": 1,
+        "vpop.eup": 1,
+        "vrsqrt.f32": 1,
+        "vsel": 2
+      },
+      "status": "succeeded",
+      "unique_opcodes": 24
+    },
+    {
+      "bundle_sha256": "bc7a55a9d2d7efee399280c40051f719afd66b40c9944dbd143d3c46a9e48c19",
+      "case_id": "stochastic_bf16",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vcvt.sr.f32.bf16": 1,
+        "vpack.c.b16": 1
+      },
+      "family_counts": {
+        "control_other": 4,
+        "convert_pack": 2,
+        "dma": 1,
+        "memory": 8,
+        "predicate": 8,
+        "spu": 2
+      },
+      "final_bundle": "cases/stochastic_bf16/compiler/llo/final_bundle.llo",
+      "instruction_count": 25,
+      "primitives": [
+        "pltpu.stochastic_round"
+      ],
+      "source_compute_opcodes": {
+        "vcvt.sr.f32.bf16": 1,
+        "vpack.c.b16": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 19
+    },
+    {
+      "bundle_sha256": "49d4d881e5a469de272143739021980833d9dd16dc75b267650b317d5f6d115f",
+      "case_id": "sub_bf16",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vsub.bf16": 1
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "memory": 8,
+        "predicate": 8,
+        "spu": 2,
+        "vpu": 1
+      },
+      "final_bundle": "cases/sub_bf16/compiler/llo/final_bundle.llo",
+      "instruction_count": 24,
+      "primitives": [
+        "lax.sub"
+      ],
+      "source_compute_opcodes": {
+        "vsub.bf16": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 18
+    },
+    {
+      "bundle_sha256": "574bf32e9eb075016a3bce066051fedb837d060313eb5437395a59ad11622280",
+      "case_id": "sub_f32",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vsub.f32": 1
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "memory": 8,
+        "predicate": 8,
+        "spu": 2,
+        "vpu": 1
+      },
+      "final_bundle": "cases/sub_f32/compiler/llo/final_bundle.llo",
+      "instruction_count": 24,
+      "primitives": [
+        "lax.sub"
+      ],
+      "source_compute_opcodes": {
+        "vsub.f32": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 18
+    },
+    {
+      "bundle_sha256": "53fc8d092f4cdb97d8cf2ea06276e448fc3a6801e4bcb281d488b07e199bb90d",
+      "case_id": "sub_s32",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vsub.s32": 1
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "memory": 8,
+        "predicate": 8,
+        "spu": 2,
+        "vpu": 1
+      },
+      "final_bundle": "cases/sub_s32/compiler/llo/final_bundle.llo",
+      "instruction_count": 24,
+      "primitives": [
+        "lax.sub"
+      ],
+      "source_compute_opcodes": {
+        "vsub.s32": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 18
+    },
+    {
+      "bundle_sha256": "dc0d39532fbcb230ddc636227c2f8da1020dcdd06064e227261e2ef2bee2a266",
+      "case_id": "tanh_logistic",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vadd.f32": 2,
+        "vmul.f32": 1,
+        "vpop.eup": 3,
+        "vpow2.f32": 1,
+        "vrcp.f32": 1,
+        "vtanh.f32": 1
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "eup": 5,
+        "memory": 6,
+        "predicate": 8,
+        "spu": 2,
+        "vpu": 4
+      },
+      "final_bundle": "cases/tanh_logistic/compiler/llo/final_bundle.llo",
+      "instruction_count": 30,
+      "primitives": [
+        "lax.tanh",
+        "lax.logistic"
+      ],
+      "source_compute_opcodes": {
+        "vadd.f32": 2,
+        "vmul.f32": 1,
+        "vpop.eup": 3,
+        "vpow2.f32": 1,
+        "vrcp.f32": 1,
+        "vtanh.f32": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 23
+    },
+    {
+      "bundle_sha256": "a57f00cd2d32222cc9b993dd5f4996eddc9efe9c490d01226c9fcac9b2558c68",
+      "case_id": "transpose_f32",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 3,
+        "sshll.u32": 1,
+        "vpop.trf.xlu0": 16,
+        "vxpose.xlu0.b32.cont": 14,
+        "vxpose.xlu0.b32.end": 1,
+        "vxpose.xlu0.b32.start": 1
+      },
+      "family_counts": {
+        "control_other": 4,
+        "dma": 1,
+        "memory": 36,
+        "predicate": 8,
+        "spu": 4,
+        "xlu_permute": 32
+      },
+      "final_bundle": "cases/transpose_f32/compiler/llo/final_bundle.llo",
+      "instruction_count": 85,
+      "primitives": [
+        "lax.transpose"
+      ],
+      "source_compute_opcodes": {
+        "vpop.trf.xlu0": 16,
+        "vxpose.xlu0.b32.cont": 14,
+        "vxpose.xlu0.b32.end": 1,
+        "vxpose.xlu0.b32.start": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 21
+    },
+    {
+      "bundle_sha256": "5d2a3c1e6ac1c18ee71f3283bcdf776079149ccaf3c20e2b1e7f63e0c11ab4c7",
+      "case_id": "unpack_bf16_f32",
+      "compute_opcodes": {
+        "pnand": 2,
+        "por": 1,
+        "scmp.lt.s32.totalorder": 2,
+        "scmp.lt.u32.totalorder": 1,
+        "scmp.ne.s32.totalorder": 2,
+        "smov": 1,
+        "sshll.u32": 1,
+        "vunpack.i.l.bf16": 1
+      },
+      "family_counts": {
+        "control_other": 4,
+        "convert_pack": 1,
+        "dma": 1,
+        "memory": 6,
+        "predicate": 8,
+        "spu": 2
+      },
+      "final_bundle": "cases/unpack_bf16_f32/compiler/llo/final_bundle.llo",
+      "instruction_count": 22,
+      "primitives": [
+        "pltpu.unpack_elementwise"
+      ],
+      "source_compute_opcodes": {
+        "vunpack.i.l.bf16": 1
+      },
+      "status": "succeeded",
+      "unique_opcodes": 18
+    }
+  ],
+  "cases_with_final_bundle": 53,
+  "compute_opcode_counts": {
+    "pnand": 114,
+    "pneg": 4,
+    "por": 61,
+    "sadd.s32": 13,
+    "sand.u32": 5,
+    "scmp.eq.s32.totalorder": 6,
+    "scmp.ge.s32.totalorder": 6,
+    "scmp.gt.s32.totalorder": 1,
+    "scmp.lt.s32.totalorder": 112,
+    "scmp.lt.u32.totalorder": 57,
+    "scmp.ne.s32.totalorder": 110,
+    "scvt.s32.f32": 2,
+    "sdivrem.u32": 1,
+    "smin.u32": 1,
+    "smov": 76,
+    "smul.u32": 2,
+    "smulhi.u32": 1,
+    "sor.u32": 1,
+    "sphi": 8,
+    "spop.drf": 1,
+    "sshll.u32": 62,
+    "sshrl.u32": 2,
+    "ssub.s32": 5,
+    "sxor.u32": 1,
+    "vadd.bf16": 3,
+    "vadd.f32": 38,
+    "vadd.s32": 152,
+    "vadd.xlane.f32.xlu0": 2,
+    "vadd.xlane.f32.xlu1": 2,
+    "vand.u32": 26,
+    "vc.u32": 1,
+    "vceil.f32": 1,
+    "vclamps-f32": 1,
+    "vclz": 2,
+    "vcmask": 1,
+    "vcmp.eq.f32.partialorder": 17,
+    "vcmp.eq.s32.totalorder": 7,
+    "vcmp.ge.f32.partialorder": 1,
+    "vcmp.ge.s32.totalorder": 1,
+    "vcmp.ge.u32.totalorder": 128,
+    "vcmp.gt.f32.partialorder": 3,
+    "vcmp.gt.s32.totalorder": 4,
+    "vcmp.gt.u32.totalorder": 1,
+    "vcmp.le.f32.partialorder": 2,
+    "vcmp.le.s32.totalorder": 1,
+    "vcmp.lt.f32.partialorder": 7,
+    "vcmp.lt.s32.totalorder": 15,
+    "vcmp.ne.f32.partialorder": 4,
+    "vcmp.ne.s32.totalorder": 2,
+    "vcosq.f32": 1,
+    "vcvt.f32.s32": 8,
+    "vcvt.s32.f32": 6,
+    "vcvt.sr.f32.bf16": 1,
+    "vfloor.f32": 2,
+    "vlaneseq": 1,
+    "vlog2.f32": 4,
+    "vmand": 6,
+    "vmax.bf16": 1,
+    "vmax.f32": 1,
+    "vmax.index.xlane.f32.xlu0": 1,
+    "vmax.xlane.bf16.xlu0": 1,
+    "vmax.xlane.f32.xlu0": 2,
+    "vmax.xlane.f32.xlu1": 1,
+    "vmin.bf16": 1,
+    "vmin.f32": 1,
+    "vmin.index.xlane.f32.xlu0": 1,
+    "vmin.u32": 6,
+    "vmin.xlane.bf16.xlu0": 1,
+    "vmin.xlane.f32.xlu0": 3,
+    "vmmov": 1,
+    "vmneg": 1,
+    "vmor": 5,
+    "vmov": 19,
+    "vmul.bf16": 3,
+    "vmul.f32": 37,
+    "vmul.u32": 10,
+    "vmul.u32.u64.high": 2,
+    "vmul.u32.u64.low": 2,
+    "vmxor": 3,
+    "vor.u32": 136,
+    "vpack.c.b16": 1,
+    "vpack.c.bf16": 2,
+    "vpack.i.bf16": 1,
+    "vpcnt": 1,
+    "vpop.eup": 17,
+    "vpop.permute.xlu0": 1,
+    "vpop.trf.xlu0": 16,
+    "vpop.xlane.xlu0": 11,
+    "vpop.xlane.xlu1": 3,
+    "vpow2.f32": 4,
+    "vrcp.f32": 4,
+    "vrot.lane.b32.xlu0": 1,
+    "vround.rtna.f32": 1,
+    "vround.rtne.f32": 1,
+    "vrsqrt.f32": 2,
+    "vsel": 339,
+    "vshll.u32": 263,
+    "vshra.s32": 2,
+    "vshrl.u32": 140,
+    "vsinq.f32": 1,
+    "vsub.bf16": 1,
+    "vsub.f32": 5,
+    "vsub.s32": 141,
+    "vtanh.f32": 1,
+    "vtrunc.f32": 3,
+    "vunpack.c.l.bf16": 2,
+    "vunpack.i.l.bf16": 1,
+    "vweird.f32": 2,
+    "vxor.u32": 8,
+    "vxpose.xlu0.b32.cont": 14,
+    "vxpose.xlu0.b32.end": 1,
+    "vxpose.xlu0.b32.start": 1
+  },
+  "mxu_violation": {},
+  "schema_version": 1,
+  "unique_all_opcodes": 126,
+  "unique_compute_opcodes": 112
+}

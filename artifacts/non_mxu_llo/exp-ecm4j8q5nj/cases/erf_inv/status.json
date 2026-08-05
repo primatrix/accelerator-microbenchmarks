@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "case_id": "erf_inv",
+  "case": {
+    "case_id": "erf_inv",
+    "family": "composite_eup",
+    "primitives": [
+      "lax.erf_inv"
+    ],
+    "input_kinds": [
+      "f32_unit"
+    ],
+    "output_dtype": "float32",
+    "shape": [
+      8,
+      128
+    ],
+    "output_shape": [
+      8,
+      128
+    ],
+    "mode": "vector",
+    "verify": true
+  },
+  "status": "succeeded",
+  "final_bundle": {
+    "path": "cases/erf_inv/compiler/llo/final_bundle.llo",
+    "sha256": "472222630585f004b1c0792a2d6a1ca6e3c3579f3db544ab41b98792c015dd19"
+  }
+}

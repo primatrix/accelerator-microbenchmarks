@@ -1,0 +1,106 @@
+= control target key start
+LH: loop header
+LB: loop body
+LE: loop exit
+PB: predicated region body
+PF: predicated region fallthrough
+CT: control target
+= control target key end
+
+     0   :  { %6 = vsyncpa [#allocation3], 0  ;;  %s449_s0 = inlined_call_operand.vmem [shape: f32[32,128], index: 0, kind: input, shape index: {}] /* input window allocation for operator input 0. The window shape is f32[8,128], while the full shape is f32[32,128]. The u8 shape/size shown above represents the raw byte size of this window in VMEM.  */  ;;  %s450_s1 = inlined_call_operand.hbm [shape: f32[32,128], index: 1, kind: output, shape index: {}] /* output window allocation for operator output 0. The window shape is f32[8,128], while the full shape is f32[32,128]. The u8 shape/size shown above represents the raw byte size of this window in VMEM.  */ } /* entry bundle: %non_mxu_scalar_arith.1 = custom-call(%copy-done) */
+   0x1   :  { %8 = vsyncpa [#allocation3 + $0x1], 0  ;;  %s347_s6 = smov 0 /* copy for cssa */  ;;  %s349_s7 = smov 0 /* copy for cssa */ } /* Start region 54 */
+   0x2   :  { %s351_s8 = smov 0 /* copy for cssa */  ;;  %s353_s9 = smov 0 /* copy for cssa */ } /* End region 54 */
+   0x3 LB: > { %s368_s10 = sadd.s32 4294967295, %s334_s9 /* iteration index, stage = 1 */  ;;  %s211_s11 = sadd.s32 4294967294, %s334_s9 /* iteration index, stage = 2 */  ;;  %s334_s9 = sphi %s353_s9, %s456_s9 /* phi copy :: iteration index, stage = 0 :: iteration index, stage = 0 */  ;;  %s330_s8 = sphi %s351_s8, %s455_s8 /* copy for cssa :: phi copy :: phi copy */  ;;  %s326_s7 = sphi %s349_s7, %s454_s7 /* copy for cssa :: phi copy :: phi copy */  ;;  %s322_s6 = sphi %s347_s6, %s453_s6 /* phi copy */ } /* Start region 59 :: Start region 21 :: Start region 22 :: Start region 23 */
+   0x4   : > { %s372_s12 = sadd.s32 1, %s334_s9 /* copy for cssa */  ;;  %s47_s13 = sadd.s32 1, %s330_s8 }
+   0x5   : > { %s44_s14 = ssub.s32 %s334_s9, %s372_s12  ;;  %p57_p0 = scmp.ne.s32.totalorder %s330_s8, %s326_s7 }
+   0x6   : > { %p45_p1 = scmp.eq.s32.totalorder %s44_s14, 0  ;;  %p58_p2 = scmp.eq.s32.totalorder %s368_s10, 3 }
+   0x7   : > { %p63_p3 = scmp.ne.s32.totalorder %s326_s7, %s322_s6  ;;  %p64_p4 = scmp.eq.s32.totalorder %s211_s11, 3 }
+   0x8   : > { %s383_s15 = scalar_select /*predicate=*/%p45_p1, /*on_true=*/%s330_s8, /*on_false=*/%s47_s13 /* copy for cssa */ }
+   0x9   : > { %p385_p5 = por %p58_p2, %p57_p0  ;;  %p389_p6 = por %p64_p4, %p63_p3 }
+   0xa   : > { %p214_p7 = scmp.ge.s32.totalorder %s334_s9, 1  ;;  %p89_p8 = scmp.lt.s32.totalorder %s334_s9, 5 }
+   0xb   : > { %p90_p9 = pnand %p214_p7, %p89_p8 } /* End region 21 */
+   0xc   : > { %s112_s18 = sadd.s32 (!%p90_p9), 7, %s368_s10  ;;  %p108_p10 = scmp.lt.s32.totalorder (!%p90_p9), %s368_s10, 3 }
+   0xd   : > { %93 = sbr.rel (%p90_p9) target = $region24  ;;  %s105_s26 = sand.u32 (!%p90_p9), 1, %s326_s7 /* smod.u32 w/div 2 */ }
+   0xe   : > { %s113_s19 = smul.u32 (!%p90_p9), 11, %s112_s18  ;;  %s215_s28 = sshll.u32 (!%p90_p9), %s105_s26, 3 }
+   0xf   : > { %s130_s2 = sadd.s32 (!%p90_p9), 1, %s368_s10  ;;  %s107_s14 = scalar_lea.vmem (!%p90_p9), [#allocation2], %s215_s28 }
+  0x10   : > { %s217_s20 = sadd.s32 (!%p90_p9), 4294967293, %s113_s19  ;;  %s152_s18 = sshll.u32 (!%p90_p9), %s107_s14, 4  ;;  %s404_s18 = int_to_ptr.vmem [resolvable:$true] %s152_s18 }
+  0x11   : > { %s116_s21 = ssub.s32 (!%p90_p9), 0, %s217_s20  ;;  %p115_p11 = scmp.lt.s32.totalorder (!%p90_p9), %s217_s20, 0 }
+  0x12   : > { %s218_s22 = smin.u32 (!%p90_p9), %s217_s20, %s116_s21  ;;  %s223_s20 = sshll.u32 (!%p90_p9), %s368_s10, 7 }
+  0x13   : > { %s219_s23 = smulhi.u32 (!%p90_p9), 2863311531, %s218_s22 } /* End region 22 */
+  0x14   : > { %266 = sdivrem.u32 %s218_s22, 5 /* kRem */ }
+  0x15   : > { %s220_s24 = sshrl.u32 %s219_s23, 1  ;;  %s409_s23 = scalar_lea.hbm %s450_s1, %s223_s20 }
+  0x16   : > { %s120_s25 = ssub.s32 0, %s220_s24 }
+  0x17   : > { %s109_s27 = scalar_select /*predicate=*/%p108_p10, /*on_true=*/%s368_s10, /*on_false=*/3 }
+  0x18   : > { %s458_s25 = smov (!%p115_p11, %s120_s25), %s220_s24  ;;  %s139_s24 = scalar_lea.sflag [#allocation3], %s105_s26 }
+  0x19   : > { %s216_s3 = sshll.u32 %s109_s27, 3  ;;  %s336_s10 = smov [#allocation2] /* materialized constant */ }
+  0x1a   : > { %s111_s13 = scalar_lea.vmem %s449_s0, %s216_s3  ;;  %s272_s27 = sshll.u32 %s336_s10, 4  ;;  %s273_s27 = int_to_ptr.vmem [resolvable:$false] %s272_s27 }
+  0x1b   : > { %v133_v0 = vld [vmem:[%s111_s13] sm:$0xff]  ;;  %s274_s28 = scalar_lea.vmem %s273_s27, 256  ;;  %p275_p2 = scmp.lt.s32.totalorder %s404_s18, %s273_s27 }
+  0x1c   : > { %s267_s29 = spop.drf %266 }
+  0x1d   : > { %s127_s30 = ssub.s32 0, %s267_s29 }
+  0x1e   : > { %s460_s30 = smov (!%p115_p11, %s127_s30), %s267_s29 }
+  0x1f   : > { %s129_s4 = sadd.s32 %s460_s30, %s458_s25  ;;  %s268_s25 = scalar_lea.vmem %s404_s18, 128 }
+  0x20   : > { %p131_p12 = scmp.gt.s32.totalorder %s129_s4, %s130_s2  ;;  %p269_p13 = scmp.ne.s32.totalorder %s404_s18, %s268_s25 }
+  0x21   : > { %p276_p3 = scmp.lt.s32.totalorder %s274_s28, %s268_s25 }
+  0x22   : > { %s462_s4 = smov (!%p131_p12, %s129_s4), %s130_s2  ;;  %p270_p0 = pnand %p269_p13, %p385_p5 }
+  0x23   : > { %s134_s19 = scvt.s32.f32 %s462_s4  ;;  %p277_p4 = por %p276_p3, %p275_p2 }
+  0x24   : > { %p271_p1 = pneg %p270_p0 }
+  0x25   : > { %v135_v1 = vstv %s134_s19 }
+  0x26   : > { %v136_v2 = vadd.f32 %v135_v1, %v133_v0  ;;  %p278_p7 = pnand %p277_p4, %p271_p1 }
+  0x27   : > { %137 = vst [vmem:[%s107_s14] sm:$0xff] /*vst_source=*/%v136_v2 }
+  0x28   : > { %283 = shalt.err (!%p278_p7) /* BoundsCheck 2 [deref of %s153] for %226 = dma.vmem_to_hbm [thread:$0]  (%p59), /*vmem=*/%s153, /*size_in_granules=*/128, /*hbm=*/%s150, /*dst_syncflagno=*/%s139 /* 
+base_bounds: (4, 1)
+dynamic_base_bounds: (4, 1)
+window_bounds: (1, 1)
+iteration_bounds: (4)
+strides: (1, 1)
+pad_low: (0, 0)
+pad_high: (0, 0)
+element_size_in_bytes: 4096
+second_minor_factor: 1 */
+hlo: non_mxu_scalar_arith.1
+ */ }
+  0x29   : > { %s284_s26 = scalar_lea.hbm %s409_s23, 128  ;;  %s288_s2 = scalar_lea.hbm %s450_s1, 512 }
+  0x2a   : > { %p285_p8 = scmp.ne.s32.totalorder %s409_s23, %s284_s26  ;;  %p289_p11 = scmp.lt.u32.totalorder %s409_s23, %s450_s1 }
+  0x2b   : > { %p290_p12 = scmp.lt.u32.totalorder %s288_s2, %s284_s26  ;;  %p292_p0 = scmp.lt.u32.totalorder %s284_s26, %s409_s23 }
+  0x2c   : > { %p286_p9 = pnand %p285_p8, %p385_p5 }
+  0x2d   : > { %p291_p13 = por %p290_p12, %p289_p11 }
+  0x2e   : > { %p287_p10 = pneg %p286_p9 }
+  0x2f   : > { %p293_p1 = por %p292_p0, %p291_p13 }
+  0x30   : > { %p294_p2 = pnand %p293_p1, %p287_p10 }
+  0x31   : > { %299 = shalt.err (!%p294_p2) /* BoundsCheck 2 [deref of %s150] for %226 = dma.vmem_to_hbm [thread:$0]  (%p59), /*vmem=*/%s153, /*size_in_granules=*/128, /*hbm=*/%s150, /*dst_syncflagno=*/%s139 /* 
+base_bounds: (4, 1)
+dynamic_base_bounds: (4, 1)
+window_bounds: (1, 1)
+iteration_bounds: (4)
+strides: (1, 1)
+pad_low: (0, 0)
+pad_high: (0, 0)
+element_size_in_bytes: 4096
+second_minor_factor: 1 */
+hlo: non_mxu_scalar_arith.1
+ */ }
+  0x32   : > { %226 = dma.vmem_to_hbm [thread:$0]  (%p385_p5), /*vmem=*/%s404_s18, /*size_in_granules=*/128, /*hbm=*/%s409_s23, /*dst_syncflagno=*/%s139_s24 /* 
+base_bounds: (4, 1)
+dynamic_base_bounds: (4, 1)
+window_bounds: (1, 1)
+iteration_bounds: (4)
+strides: (1, 1)
+pad_low: (0, 0)
+pad_high: (0, 0)
+element_size_in_bytes: 4096
+second_minor_factor: 1 */ } /* End region 23 */
+  0x33 PF: > { %p232_p3 = scmp.ge.s32.totalorder %s334_s9, 2  ;;  %s164_s5 = sand.u32 1, %s322_s6 /* smod.u32 w/div 2 */ } /* Start/End empty region 24 */
+  0x34   : > { %s165_s11 = scalar_lea.sflag [#allocation3], %s164_s5 }
+  0x35   : > { %p229_p4 = pnand %p232_p3, %p389_p6 }
+  0x36   : > { %317 = dma.done.wait (!%p229_p4), %s165_s11, 128 /* pipeline-emitter-dma-wait */ }
+  0x37   : > { %319 = vsyncadd (!%p229_p4), %s165_s11, 4294967168  ;;  %p11_p7 = scmp.ge.s32.totalorder %s372_s12, 6 /* loop exit test */  ;;  %s453_s6 = smov %s326_s7 } /* End region 59 :: Start region 6 :: End region 6 :: Start region 7 :: End region 7 :: Start region 3 :: Start region 4 :: Start region 58 */
+  0x38   : > { %s454_s7 = smov %s330_s8  ;;  %s455_s8 = smov %s383_s15 }
+  0x39   : > { %s456_s9 = smov %s372_s12  ;;  %13 = sbr.rel (!%p11_p7) target = $region59 } /* End region 3 */
+  0x3a   :  {}
+  0x3b   :  {}
+  0x3c   :  {}
+  0x3d   :  {}
+  0x3e   :  {}
+  0x3f   :  {} /* End region 4 :: End region 58 */
+  0x40   :  { %170 = vsyncpa [#allocation3], 1 }
+  0x41   :  { %172 = vsyncpa [#allocation3 + $0x1], 1 } /* exit bundle: %non_mxu_scalar_arith.1 = custom-call(%copy-done) */

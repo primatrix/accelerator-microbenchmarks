@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "case_id": "minmax_s32",
+  "case": {
+    "case_id": "minmax_s32",
+    "family": "vpu",
+    "primitives": [
+      "lax.min",
+      "lax.max"
+    ],
+    "input_kinds": [
+      "s32",
+      "s32_other"
+    ],
+    "output_dtype": "int32",
+    "shape": [
+      8,
+      128
+    ],
+    "output_shape": [
+      8,
+      128
+    ],
+    "mode": "vector",
+    "verify": true
+  },
+  "status": "succeeded",
+  "final_bundle": {
+    "path": "cases/minmax_s32/compiler/llo/final_bundle.llo",
+    "sha256": "455cece2a9adf1fe848148a4650b7b60acde35650ac32ec9695f8cc5fca8fe1e"
+  }
+}

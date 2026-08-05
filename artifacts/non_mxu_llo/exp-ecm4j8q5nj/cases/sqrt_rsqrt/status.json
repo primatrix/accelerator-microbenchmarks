@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "case_id": "sqrt_rsqrt",
+  "case": {
+    "case_id": "sqrt_rsqrt",
+    "family": "eup",
+    "primitives": [
+      "lax.sqrt",
+      "lax.rsqrt"
+    ],
+    "input_kinds": [
+      "f32_positive"
+    ],
+    "output_dtype": "float32",
+    "shape": [
+      8,
+      128
+    ],
+    "output_shape": [
+      8,
+      128
+    ],
+    "mode": "vector",
+    "verify": true
+  },
+  "status": "succeeded",
+  "final_bundle": {
+    "path": "cases/sqrt_rsqrt/compiler/llo/final_bundle.llo",
+    "sha256": "c7f6e0017ec0488c44d583481da1d0d7bcf6c4be1df0ed3814ca22ea6aef99bd"
+  }
+}

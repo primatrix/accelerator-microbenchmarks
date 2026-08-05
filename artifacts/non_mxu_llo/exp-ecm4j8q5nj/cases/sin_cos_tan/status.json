@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "case_id": "sin_cos_tan",
+  "case": {
+    "case_id": "sin_cos_tan",
+    "family": "eup",
+    "primitives": [
+      "lax.sin",
+      "lax.cos",
+      "lax.tan"
+    ],
+    "input_kinds": [
+      "f32_small"
+    ],
+    "output_dtype": "float32",
+    "shape": [
+      8,
+      128
+    ],
+    "output_shape": [
+      8,
+      128
+    ],
+    "mode": "vector",
+    "verify": true
+  },
+  "status": "succeeded",
+  "final_bundle": {
+    "path": "cases/sin_cos_tan/compiler/llo/final_bundle.llo",
+    "sha256": "2102ab2b5230bb034bece7c45001a39ac543fed38ab9d34bac8c8de8c57ddd11"
+  }
+}

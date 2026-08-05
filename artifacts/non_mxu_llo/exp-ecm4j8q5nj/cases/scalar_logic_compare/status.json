@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "case_id": "scalar_logic_compare",
+  "case": {
+    "case_id": "scalar_logic_compare",
+    "family": "spu_predicate",
+    "primitives": [
+      "pl.program_id",
+      "lax.and",
+      "lax.or",
+      "lax.xor",
+      "lax.shift_left",
+      "lax.shift_right_logical",
+      "lax.lt",
+      "lax.select_n"
+    ],
+    "input_kinds": [
+      "f32_signed"
+    ],
+    "output_dtype": "float32",
+    "shape": [
+      32,
+      128
+    ],
+    "output_shape": [
+      32,
+      128
+    ],
+    "mode": "scalar_grid",
+    "verify": true
+  },
+  "status": "succeeded",
+  "final_bundle": {
+    "path": "cases/scalar_logic_compare/compiler/llo/final_bundle.llo",
+    "sha256": "dc29b62d4663d4b96e924a33fde1bdca0e36cd966d23772c8bfc7bf0a6e4eef3"
+  }
+}
