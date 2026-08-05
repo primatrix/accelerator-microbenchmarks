@@ -12,7 +12,9 @@ from pathlib import Path
 from typing import Any
 
 
-INSTRUCTION_RE = re.compile(r"(?:%[A-Za-z0-9_]+\s*=\s*)?([a-z][a-z0-9_]*(?:\.[a-z0-9_]+)*)")
+INSTRUCTION_RE = re.compile(
+    r"(?:%[A-Za-z0-9_]+\s*=\s*)?([a-z][a-z0-9_-]*(?:\.[a-z0-9_-]+)*)"
+)
 NON_INSTRUCTIONS = {
     "entry", "target", "region", "hlo", "shape", "index", "kind",
     "true", "false", "resolvable", "thread", "vmem", "smem", "hbm",
