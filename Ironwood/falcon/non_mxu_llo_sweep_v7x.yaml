@@ -1,0 +1,53 @@
+# One TPU v7x host, one fresh JAX subprocess and JF dump directory per probe.
+name: non-mxu-compute-llo-v7x-sweep
+exp_type: PROFILING
+artifact_type: operator-profile
+cluster_name: tpu-training-antgroup
+profile: true
+tags: [profile, operator-optimization, pallas, llo, non-mxu, isa-reverse-engineering]
+model_version: non-mxu-llo-final-bundle-v1
+config: '{"scope":"non-MXU compute","dump":"JF annotated final bundles","case_source":"benchmark_non_mxu_pallas.py"}'
+role_to_task_spec:
+  worker:
+    replica: 1
+    image: us-docker.pkg.dev/cloud-tpu-images/jax-ai-image/tpu:jax0.9.0-rev1
+    device_count: 8
+    device_type: v7x
+    device_topo: 2x2x1
+    envs:
+      NON_MXU_CASE_TIMEOUT_SECONDS: "420"
+      NON_MXU_LLO_DUMP_ROOT: /tmp/tpu_logs/non-mxu-llo-dumps
+      NON_MXU_SOURCE_REPOSITORY: https://github.com/primatrix/accelerator-microbenchmarks.git
+      NON_MXU_SOURCE_REF: codex/mxu-behavior-modeling
+      TMPDIR: /tmp/tpu_logs/tmp
+      PIP_CACHE_DIR: /tmp/tpu_logs/pip-cache
+      UV_CACHE_DIR: /tmp/tpu_logs/uv-cache
+      PYTHONUNBUFFERED: "1"
+    command: |
+      set -eu
+      ulimit -c 0
+      mkdir -p "$TMPDIR" "$PIP_CACHE_DIR" "$UV_CACHE_DIR"
+
+      SOURCE_ROOT=/tmp/tpu_logs/accelerator-microbenchmarks
+      ARTIFACT_ROOT="${ARTIFACT_LOCAL_DIR:-/tmp/non-mxu-llo-artifact}"
+      export JAX_COMPILATION_CACHE_DIR=/tmp/tpu_logs/jax-compilation-cache
+      mkdir -p "$JAX_COMPILATION_CACHE_DIR" "$ARTIFACT_ROOT"
+
+      git clone --depth 1 --branch "$NON_MXU_SOURCE_REF" \
+        "$NON_MXU_SOURCE_REPOSITORY" "$SOURCE_ROOT"
+      export NON_MXU_SOURCE_COMMIT
+      NON_MXU_SOURCE_COMMIT="$(git -C "$SOURCE_ROOT" rev-parse HEAD)"
+
+      python3 -m pip install --no-cache-dir --upgrade "jax[tpu]==0.10.2"
+      python3 - <<'PY'
+      import importlib.metadata as md
+      for package in ("jax", "jaxlib", "libtpu"):
+          try:
+              print(f"{package}={md.version(package)}")
+          except md.PackageNotFoundError:
+              print(f"{package}=not-installed")
+      PY
+
+      python3 "$SOURCE_ROOT/Ironwood/src/benchmark_non_mxu_pallas_sweep.py" \
+        --artifact-dir "$ARTIFACT_ROOT" \
+        --case-timeout-seconds "$NON_MXU_CASE_TIMEOUT_SECONDS"
