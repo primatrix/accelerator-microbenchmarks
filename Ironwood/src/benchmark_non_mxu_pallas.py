@@ -108,6 +108,7 @@ CASES = {
         _case("reduce_minmax_bf16", "xlu_reduce", ("lax.reduce_min", "lax.reduce_max"), ("bf16_signed",), "bfloat16"),
         _case("reduce_s32", "xlu_reduce", ("lax.reduce_sum", "lax.reduce_min", "lax.reduce_max"), ("s32",), "int32"),
         _case("argminmax_f32", "xlu_reduce", ("lax.argmin", "lax.argmax"), ("f32_signed",), "int32"),
+        _case("broadcast_lane_f32", "xlu", ("lax.slice", "lax.broadcast_in_dim"), ("f32_signed",), "float32"),
         _case("transpose_f32", "xlu", ("lax.transpose",), ("f32_signed",), "float32", shape=TRANSPOSE_SHAPE, output_shape=TRANSPOSE_SHAPE),
         _case("iota_f32", "vpu", ("lax.iota",), ("f32_signed",), "float32"),
         _case("roll_f32", "xlu", ("pltpu.roll",), ("f32_signed",), "float32", verify=False),
@@ -221,6 +222,9 @@ def _apply(case_id: str, *xs: jax.Array) -> jax.Array:
     if case_id == "argminmax_f32":
         value = jnp.argmin(x, axis=1).astype(jnp.int32) + 257 * jnp.argmax(x, axis=1).astype(jnp.int32)
         return jnp.broadcast_to(value[:, None], x.shape)
+    if case_id == "broadcast_lane_f32":
+        first_lane = lax.slice(x, (0, 0), (x.shape[0], 1))
+        return lax.broadcast_in_dim(first_lane, x.shape, (0, 1))
     if case_id == "transpose_f32": return jnp.transpose(x, (1, 0))
     if case_id == "iota_f32":
         # Mosaic TPU requires tpu.iota itself to produce an integer/index
