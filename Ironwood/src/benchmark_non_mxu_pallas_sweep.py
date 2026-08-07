@@ -5,7 +5,6 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
-import hashlib
 import json
 import os
 import platform
@@ -37,18 +36,12 @@ def _write_json(path: Path, value: dict[str, Any]) -> None:
     path.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
-def _sha256(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
-
-
 def _libtpu_args(raw_dir: Path) -> str:
     replaced = (
         "--xla_jf_dump_to=",
         "--xla_jf_dump_llo_text=",
+        "--xla_jf_dump_llo_proto=",
+        "--xla_jf_dump_isa_program_proto=",
         "--xla_jf_emit_annotations=",
     )
     inherited = [
@@ -60,6 +53,8 @@ def _libtpu_args(raw_dir: Path) -> str:
         (
             f"--xla_jf_dump_to={raw_dir}",
             "--xla_jf_dump_llo_text=true",
+            "--xla_jf_dump_llo_proto=true",
+            "--xla_jf_dump_isa_program_proto=true",
             "--xla_jf_emit_annotations=true",
         )
     )
@@ -97,10 +92,21 @@ def _index_raw(raw_dir: Path) -> dict[str, Any]:
             {
                 "path": str(path.relative_to(raw_dir)),
                 "size_bytes": path.stat().st_size,
-                "sha256": _sha256(path),
             }
         )
-    return {"file_count": len(files), "files": files}
+    proto_files = [
+        item
+        for item in files
+        if "proto" in Path(item["path"]).name.lower()
+        or Path(item["path"]).suffix.lower() in {".pb", ".pbtxt"}
+    ]
+    return {
+        "file_count": len(files),
+        "total_size_bytes": sum(item["size_bytes"] for item in files),
+        "proto_file_count": len(proto_files),
+        "proto_files": proto_files,
+        "files": files,
+    }
 
 
 def _run_case(
@@ -167,10 +173,13 @@ def _run_case(
         {
             "path": str(path.relative_to(raw_dir)),
             "size_bytes": path.stat().st_size,
-            "sha256": _sha256(path),
         }
         for path in candidates
     ]
+    raw_dump_dir = llo_dir / "raw"
+    if raw_dump_dir.exists():
+        shutil.rmtree(raw_dump_dir)
+    shutil.copytree(raw_dir, raw_dump_dir)
     _write_json(llo_dir / "file_index.json", raw_index)
 
     known_dump_abort = returncode == -6 and selected.is_file() and "vmem_report_header.tmpl" in stderr
@@ -202,11 +211,13 @@ def _run_case(
         "duration_seconds": (finished - started).total_seconds(),
         "libtpu_init_args": env["LIBTPU_INIT_ARGS"],
         "raw_file_count": raw_index["file_count"],
+        "raw_total_size_bytes": raw_index["total_size_bytes"],
+        "proto_file_count": raw_index["proto_file_count"],
+        "raw_dump": str(raw_dump_dir.relative_to(artifact_root)),
         "final_bundle": (
             {
                 "path": str(selected.relative_to(artifact_root)),
                 "size_bytes": selected.stat().st_size,
-                "sha256": _sha256(selected),
             }
             if selected.is_file()
             else None
@@ -272,6 +283,8 @@ def main() -> None:
         "dump_flags": [
             "--xla_jf_dump_to=<case-dir>",
             "--xla_jf_dump_llo_text=true",
+            "--xla_jf_dump_llo_proto=true",
+            "--xla_jf_dump_isa_program_proto=true",
             "--xla_jf_emit_annotations=true",
         ],
         "source": {

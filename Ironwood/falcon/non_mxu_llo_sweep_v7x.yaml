@@ -5,8 +5,8 @@ artifact_type: operator-profile
 cluster_name: tpu-training-antgroup
 profile: true
 tags: [profile, operator-optimization, pallas, llo, non-mxu, isa-reverse-engineering]
-model_version: non-mxu-llo-final-bundle-v1
-config: '{"scope":"non-MXU compute","dump":"JF annotated final bundles","case_source":"benchmark_non_mxu_pallas.py"}'
+model_version: non-mxu-llo-proto-final-bundle-v2
+config: '{"scope":"non-MXU compute","dump":"JF annotated LLO proto, ISA program proto, and final bundles","case_source":"benchmark_non_mxu_pallas.py","libtpu":"0.0.42.1"}'
 role_to_task_spec:
   worker:
     replica: 1
@@ -38,7 +38,8 @@ role_to_task_spec:
       export NON_MXU_SOURCE_COMMIT
       NON_MXU_SOURCE_COMMIT="$(git -C "$SOURCE_ROOT" rev-parse HEAD)"
 
-      python3 -m pip install --no-cache-dir --upgrade "jax[tpu]==0.10.2"
+      python3 -m pip install --no-cache-dir --upgrade \
+        "jax[tpu]==0.10.2" "libtpu==0.0.42.1"
       python3 - <<'PY'
       import importlib.metadata as md
       for package in ("jax", "jaxlib", "libtpu"):
@@ -49,5 +50,16 @@ role_to_task_spec:
       PY
 
       python3 "$SOURCE_ROOT/Ironwood/src/benchmark_non_mxu_pallas_sweep.py" \
+        --case add_f32 \
         --artifact-dir "$ARTIFACT_ROOT" \
         --case-timeout-seconds "$NON_MXU_CASE_TIMEOUT_SECONDS"
+
+      REVIEW_ARCHIVE=/tmp/tpu_logs/non-mxu-llo-proto-final-bundles.tar.gz
+      REVIEW_COLLECTED=/tmp/tpu_logs/non-mxu-llo-proto-final-bundles.collected
+      tar -czf "$REVIEW_ARCHIVE" -C "$ARTIFACT_ROOT" .
+      echo "FALCON_REVIEW_ARCHIVE_READY=$REVIEW_ARCHIVE"
+      attempts=0
+      while [ ! -f "$REVIEW_COLLECTED" ] && [ "$attempts" -lt 360 ]; do
+        sleep 5
+        attempts=$((attempts + 1))
+      done
