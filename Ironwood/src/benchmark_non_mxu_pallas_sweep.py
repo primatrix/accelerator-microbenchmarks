@@ -13,6 +13,7 @@ import shlex
 import shutil
 import subprocess
 import sys
+import tarfile
 from pathlib import Path
 from typing import Any
 
@@ -176,10 +177,13 @@ def _run_case(
         }
         for path in candidates
     ]
-    raw_dump_dir = llo_dir / "raw"
-    if raw_dump_dir.exists():
-        shutil.rmtree(raw_dump_dir)
-    shutil.copytree(raw_dir, raw_dump_dir)
+    local_raw_archive = raw_dir.parent / f"{case_id}-raw-dump.tar.gz"
+    if local_raw_archive.exists():
+        local_raw_archive.unlink()
+    with tarfile.open(local_raw_archive, "w:gz") as archive:
+        archive.add(raw_dir, arcname=".")
+    raw_dump_archive = llo_dir / "raw_dump.tar.gz"
+    shutil.copy2(local_raw_archive, raw_dump_archive)
     _write_json(llo_dir / "file_index.json", raw_index)
 
     known_dump_abort = returncode == -6 and selected.is_file() and "vmem_report_header.tmpl" in stderr
@@ -213,7 +217,7 @@ def _run_case(
         "raw_file_count": raw_index["file_count"],
         "raw_total_size_bytes": raw_index["total_size_bytes"],
         "proto_file_count": raw_index["proto_file_count"],
-        "raw_dump": str(raw_dump_dir.relative_to(artifact_root)),
+        "raw_dump": str(raw_dump_archive.relative_to(artifact_root)),
         "final_bundle": (
             {
                 "path": str(selected.relative_to(artifact_root)),

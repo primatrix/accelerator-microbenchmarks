@@ -50,7 +50,6 @@ role_to_task_spec:
       PY
 
       python3 "$SOURCE_ROOT/Ironwood/src/benchmark_non_mxu_pallas_sweep.py" \
-        --case add_f32 \
         --artifact-dir "$ARTIFACT_ROOT" \
         --case-timeout-seconds "$NON_MXU_CASE_TIMEOUT_SECONDS"
 
